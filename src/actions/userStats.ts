@@ -23,3 +23,21 @@ export const getTotalSolved = async () => {
         throw error;
     }
 };
+
+export const getTotalAnswersShown = async () => {
+    try {
+        const result = await db.execute(
+            sql`SELECT COUNT(*) FROM ${userRiddle} WHERE answer_shown = true AND user_id = ${
+                (
+                    await getUser()
+                ).id
+            }`
+        );
+        return result[0];
+    } catch (error) {
+        console.error("Error fetching total shown answers:", error);
+        throw error;
+    }
+};
+
+// get userRiddle where userid - id then count hints_used > 0
