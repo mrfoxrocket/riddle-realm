@@ -4,6 +4,7 @@ import { signOutAction } from "@/actions/user";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
+import Link from "next/link";
 
 export default function Header() {
     const router = useRouter();
@@ -13,10 +14,29 @@ export default function Header() {
     };
 
     return (
-        <main className="flex w-full justify-between">
-            <Button onClick={handleSignOut}>Sign Out</Button>
-            <h1 className="text-4xl font-bold">RiddleRealm.</h1>
-            <ThemeToggle />
-        </main>
+        <header className="flex w-full flex-col items-center gap-4">
+            <div className="flex w-full justify-between">
+                <Button onClick={handleSignOut}>Sign Out</Button>
+                <h1 className="text-4xl font-bold">RiddleRealm.</h1>
+                <ThemeToggle />
+            </div>
+            <div className="flex w-fit justify-center items-center ">
+                <Link href="/stats">
+                    <Button className="" variant="link">
+                        Stats
+                    </Button>
+                </Link>
+                <Link href="/play">
+                    <Button className="" variant="link">
+                        Play
+                    </Button>
+                </Link>
+                <Link href="/leaderboard">
+                    <Button className="" variant="link">
+                        Leaderboard
+                    </Button>
+                </Link>
+            </div>
+        </header>
     );
 }

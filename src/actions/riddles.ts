@@ -36,23 +36,28 @@ export const getRandomRiddle = async (): Promise<Riddle> => {
     }
 };
 
-export const checkRiddleAnswer = async (formData: FormData) => {
+export const checkRiddleAnswer = async (
+    formData: FormData,
+    riddleId: string,
+    hintsUsed: number,
+    answerShown: boolean
+) => {
     try {
         const text = formData.get("text") as string;
 
-        //could be changed to a prop or something else but this is probably fine
-        const id = formData.get("id") as string;
-        const hintsUsed = formData.get("hintsUsed") as string;
-
-        const data = await db.select().from(riddle).where(eq(riddle.id, id));
+        const data = await db
+            .select()
+            .from(riddle)
+            .where(eq(riddle.id, riddleId));
 
         const result = text.toLowerCase() === data[0].answer.toLowerCase();
 
         if (result === true) {
             await db.insert(userRiddle).values({
                 userId: (await getUser()).id,
-                riddleId: id,
+                riddleId,
                 solved: true,
+                answerShown,
                 hintsUsed,
             });
         }

@@ -13,33 +13,29 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
-import toast from "react-hot-toast";
 import { useTransition } from "react";
 import { checkRiddleAnswer } from "@/actions/riddles";
 
-const RiddleForm = (props) => {
+type Props = {
+    riddleId: string;
+    hintsUsed: number;
+    answerShown: boolean;
+};
+const RiddleForm = (props: Props) => {
     const [isPending, startTransition] = useTransition();
     const form = useForm();
 
-    const { riddleId, hintsUsed } = props;
+    const { riddleId, hintsUsed, answerShown } = props;
 
     const handleSubmit = async (formData: FormData) => {
         startTransition(async () => {
-            const response = await checkRiddleAnswer(formData);
-
-            if (response) {
-                toast.success("Correct!");
-            } else {
-                toast.error("Incorrect!");
-            }
+            await checkRiddleAnswer(formData, riddleId, hintsUsed, answerShown);
         });
     };
 
     return (
         <Form {...form}>
             <form action={handleSubmit} className="space-y-8">
-                <input hidden value={riddleId} name="id" />
-                <input hidden value={hintsUsed} name="hintsUsed" />
                 <FormField
                     control={form.control}
                     disabled={isPending}

@@ -82,7 +82,11 @@ function Play() {
                 )}
             </h2>
             {riddle && (
-                <RiddleForm riddleId={riddle.id} hintsUsed={hint.index} />
+                <RiddleForm
+                    riddleId={riddle.id}
+                    hintsUsed={hint.index}
+                    answerShown={answer !== ""}
+                />
             )}
             <p>{answer !== "" ? answer : hint.text}</p>
             <Button onClick={handleNewRiddle}>New Riddle</Button>
