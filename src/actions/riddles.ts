@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/db";
-import { riddle, userRiddle } from "@/db/schemas";
+import { riddle, userRiddle, hint } from "@/db/schemas";
 
 import { getUser } from "@/lib/auth";
 import { getErrorMessage } from "@/lib/utils";
@@ -39,7 +39,10 @@ export const getRandomRiddle = async (): Promise<Riddle> => {
 export const checkRiddleAnswer = async (formData: FormData) => {
     try {
         const text = formData.get("text") as string;
+
+        //could be changed to a prop or something else but this is probably fine
         const id = formData.get("id") as string;
+        const hintsUsed = formData.get("hintsUsed") as string;
 
         const data = await db.select().from(riddle).where(eq(riddle.id, id));
 
@@ -50,10 +53,39 @@ export const checkRiddleAnswer = async (formData: FormData) => {
                 userId: (await getUser()).id,
                 riddleId: id,
                 solved: true,
+                hintsUsed,
             });
         }
 
         return result;
+    } catch (error) {
+        console.error("Error checking riddle answer:", error);
+        throw error;
+    }
+};
+
+export const getHints = async (riddleId) => {
+    try {
+        const data = await db
+            .select()
+            .from(hint)
+            .where(eq(hint.riddleId, riddleId));
+
+        return data;
+    } catch (error) {
+        console.error("Error checking riddle answer:", error);
+        throw error;
+    }
+};
+
+export const getAnswer = async (riddleId) => {
+    try {
+        const data = await db
+            .select()
+            .from(riddle)
+            .where(eq(riddle.id, riddleId));
+
+        return data[0].answer;
     } catch (error) {
         console.error("Error checking riddle answer:", error);
         throw error;

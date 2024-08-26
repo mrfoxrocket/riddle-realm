@@ -21,7 +21,7 @@ const RiddleForm = (props) => {
     const [isPending, startTransition] = useTransition();
     const form = useForm();
 
-    const { riddleId } = props;
+    const { riddleId, hintsUsed } = props;
 
     const handleSubmit = async (formData: FormData) => {
         startTransition(async () => {
@@ -39,6 +39,7 @@ const RiddleForm = (props) => {
         <Form {...form}>
             <form action={handleSubmit} className="space-y-8">
                 <input hidden value={riddleId} name="id" />
+                <input hidden value={hintsUsed} name="hintsUsed" />
                 <FormField
                     control={form.control}
                     disabled={isPending}
