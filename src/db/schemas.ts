@@ -43,8 +43,8 @@ export const userRiddle = pgTable(
         userId: uuid("user_id").notNull(),
         riddleId: uuid("riddle_id").notNull(),
         solved: boolean("solved").default(false).notNull(),
-        answerShown: boolean("answer_shown").default(false).notNull(),
-        hintsUsed: integer("hints_used").default(0).notNull(),
+        answerShown: boolean("answer_shown"),
+        hintsUsed: integer("hints_used"),
     },
     (table) => ({
         pk: (table.userId, table.riddleId),
