@@ -59,7 +59,7 @@ export default function DifficultyChart() {
     }, []);
 
     return (
-        <Card className="flex flex-col w-full p-4">
+        <Card className="flex flex-col w-full p-4 ">
             <CardHeader className="items-center pb-0">
                 <CardTitle>Riddles Solved By Difficulty</CardTitle>
             </CardHeader>

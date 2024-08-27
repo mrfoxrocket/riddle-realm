@@ -35,22 +35,36 @@ const RiddleForm = (props: Props) => {
 
     return (
         <Form {...form}>
-            <form action={handleSubmit} className="space-y-8">
+            <form
+                action={handleSubmit}
+                className="space-y-8 flex w-full gap-4 justify-between items-end"
+            >
                 <FormField
                     control={form.control}
                     disabled={isPending}
                     name="text"
                     render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Text</FormLabel>
+                        <FormItem className="w-full">
+                            <FormLabel hidden>Riddle Input</FormLabel>
                             <FormControl>
-                                <Input placeholder="Text" {...field} />
+                                <input
+                                    placeholder="Answer"
+                                    {...field}
+                                    className="w-full bg-transparent  border-b-4 pb-2 outline-none text-2xl "
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button disabled={isPending} type="submit">
+
+                <Button
+                    variant="custom"
+                    size="lg"
+                    disabled={isPending}
+                    type="submit"
+                    className="h-full"
+                >
                     {isPending ? (
                         <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

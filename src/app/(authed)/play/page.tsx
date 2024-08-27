@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { getHints, getRandomRiddle, getAnswer } from "@/actions/riddles";
 import RiddleForm from "@/components/RiddleForm";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import DifficultySelect from "@/components/DifficultySelect";
 
 type Riddle = {
     id: string;
@@ -72,11 +74,18 @@ function Play() {
     };
 
     return (
-        <div className="flex flex-col gap-4">
-            <h1>Solve a Riddle</h1>
-            <h2>
+        <div className="flex flex-col gap-8 w-full items-center">
+            <h1 className="text-4xl font-bold self-center">Solve a Riddle</h1>
+            <DifficultySelect />
+            <h2 className="text-3xl">
                 {riddle ? (
-                    riddle.question + riddle.answer
+                    <TextGenerateEffect
+                        key={riddle.question}
+                        className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400  text-4xl "
+                        duration={1}
+                        filter={false}
+                        words={riddle.question}
+                    />
                 ) : (
                     <Loader2 className="animate-spin size-16" />
                 )}
@@ -88,17 +97,45 @@ function Play() {
                     answerShown={answer !== ""}
                 />
             )}
-            <p>{answer !== "" ? answer : hint.text}</p>
-            <Button onClick={handleNewRiddle}>New Riddle</Button>
-            {hint.allUsed ? (
-                <Button disabled={answer !== ""} onClick={handleGetAnswer}>
-                    Reveal Answer
-                </Button>
-            ) : (
-                <Button disabled={hint.allUsed} onClick={handleGetHint}>
-                    Get Hint
-                </Button>
-            )}
+            <p className="text-2xl text-primary">
+                {answer !== "" ? answer : hint.text}
+            </p>
+            <div className="flex gap-4 w-full justify-evenly">
+                <div className="flex gap-4 items-center text-4xl">
+                    <p>Stuck?</p>
+
+                    <Button
+                        variant="custom"
+                        size="md"
+                        disabled={answer !== ""}
+                        onClick={handleNewRiddle}
+                    >
+                        Generate
+                    </Button>
+
+                    <p>a New Riddle.</p>
+                    <p>Or</p>
+                    {hint.allUsed ? (
+                        <Button
+                            disabled={answer !== ""}
+                            onClick={handleGetAnswer}
+                            variant="custom"
+                            size="md"
+                        >
+                            Reveal Answer
+                        </Button>
+                    ) : (
+                        <Button
+                            disabled={hint.allUsed}
+                            onClick={handleGetHint}
+                            variant="custom"
+                            size="md"
+                        >
+                            Get Hint
+                        </Button>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

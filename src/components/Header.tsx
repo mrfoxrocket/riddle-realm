@@ -17,25 +17,39 @@ export default function Header() {
         <header className="flex w-full flex-col items-center gap-6">
             <div className="flex w-full justify-between">
                 <Button onClick={handleSignOut}>Sign Out</Button>
-                <h1 className="text-4xl font-bold">RiddleRealm.</h1>
+                <div className="flex flex-col gap-y-2">
+                    <div className="flex items-center gap-2 justify-center">
+                        <h1 className="text-6xl font-bold text-green-500">¿</h1>
+                        <h1 className="text-5xl font-bold">RiddleRealm.</h1>
+                    </div>
+                    <div className="flex w-full justify-center items-center">
+                        <Link href="/stats">
+                            <Button
+                                className="text-2xl font-bold"
+                                variant="link"
+                            >
+                                Stats
+                            </Button>
+                        </Link>
+                        <Link href="/play">
+                            <Button
+                                className="text-2xl font-bold"
+                                variant="link"
+                            >
+                                Play
+                            </Button>
+                        </Link>
+                        <Link href="/leaderboard">
+                            <Button
+                                className="text-2xl font-bold"
+                                variant="link"
+                            >
+                                Leaderboard
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
                 <ThemeToggle />
-            </div>
-            <div className="flex w-full justify-center items-center">
-                <Link href="/stats">
-                    <Button className="text-xl" variant="link">
-                        Stats
-                    </Button>
-                </Link>
-                <Link href="/play">
-                    <Button className="text-xl" variant="link">
-                        Play
-                    </Button>
-                </Link>
-                <Link href="/leaderboard">
-                    <Button className="text-xl" variant="link">
-                        Leaderboard
-                    </Button>
-                </Link>
             </div>
         </header>
     );
