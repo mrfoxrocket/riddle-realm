@@ -16,40 +16,27 @@ type Riddle = {
 
 export const getRandomRiddle = async (difficulty: string): Promise<Riddle> => {
     try {
-        if (difficulty !== "all") {
-            const result = await db.execute(sql`
+        const whereClause =
+            difficulty !== "all"
+                ? sql`WHERE difficulty = ${difficulty}`
+                : sql``;
+
+        const result = await db.execute(sql`
             SELECT id, question, difficulty 
             FROM ${riddle} 
-            WHERE difficulty = ${difficulty}
+            ${whereClause}
             ORDER BY RANDOM()
             LIMIT 1
         `);
 
-            console.log(difficulty);
+        console.log(difficulty);
 
-            const randomRiddle = result[0] as Riddle;
-            return {
-                id: randomRiddle.id,
-                question: randomRiddle.question,
-                difficulty: randomRiddle.difficulty,
-            };
-        } else {
-            const result = await db.execute(sql`
-                SELECT id, question 
-                FROM ${riddle} 
-                ORDER BY RANDOM()
-                LIMIT 1
-            `);
-
-            console.log(difficulty);
-
-            const randomRiddle = result[0] as Riddle;
-            return {
-                id: randomRiddle.id,
-                question: randomRiddle.question,
-                difficulty: randomRiddle.difficulty,
-            };
-        }
+        const randomRiddle = result[0] as Riddle;
+        return {
+            id: randomRiddle.id,
+            question: randomRiddle.question,
+            difficulty: randomRiddle.difficulty,
+        };
     } catch (error) {
         console.error("Error fetching random riddle:", error);
         throw error;
