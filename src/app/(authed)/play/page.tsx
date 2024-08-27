@@ -72,7 +72,7 @@ function Play() {
     };
 
     return (
-        <div>
+        <div className="flex flex-col gap-4">
             <h1>Solve a Riddle</h1>
             <h2>
                 {riddle ? (

@@ -6,6 +6,7 @@ import {
     integer,
     boolean,
     foreignKey,
+    primaryKey,
 } from "drizzle-orm/pg-core";
 
 export const RiddleDifficulty = pgEnum("riddle_difficulty", [
@@ -47,7 +48,7 @@ export const userRiddle = pgTable(
         hintsUsed: integer("hints_used"),
     },
     (table) => ({
-        pk: (table.userId, table.riddleId),
+        pk: primaryKey(table.userId, table.riddleId),
 
         riddleForeignKey: foreignKey({
             columns: [table.riddleId],
