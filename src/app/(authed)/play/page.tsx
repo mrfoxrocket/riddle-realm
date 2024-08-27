@@ -11,22 +11,34 @@ import DifficultySelect from "@/components/DifficultySelect";
 type Riddle = {
     id: string;
     question: string;
-    answer: string;
+    difficulty: string;
 };
 
 function Play() {
     const [riddle, setRiddle] = useState<Riddle | null>(null);
     const [answer, setAnswer] = useState("");
+    const [difficulty, setDifficulty] = useState("all");
+    const [inputValue, setInputValue] = useState("");
+
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value);
+    };
+
     const [hint, setHint] = useState({
         text: "",
         index: 0,
         allUsed: false,
     });
 
+    const handleDifficultyChange = (value: string) => {
+        setDifficulty(value);
+        handleNewRiddle(value);
+    };
+
     useEffect(() => {
         const fetchRiddle = async () => {
             try {
-                const response = await getRandomRiddle();
+                const response = await getRandomRiddle(difficulty);
 
                 setRiddle(response);
             } catch (error) {
@@ -37,11 +49,12 @@ function Play() {
         fetchRiddle();
     }, []);
 
-    const handleNewRiddle = async () => {
+    const handleNewRiddle = async (difficulty: string) => {
         try {
-            const response = await getRandomRiddle();
+            const response = await getRandomRiddle(difficulty);
             setRiddle(response);
             setAnswer("");
+            setInputValue("");
 
             setHint({ text: "", index: 0, allUsed: false });
         } catch (error) {
@@ -76,12 +89,15 @@ function Play() {
     return (
         <div className="flex flex-col gap-8 w-full items-center">
             <h1 className="text-4xl font-bold self-center">Solve a Riddle</h1>
-            <DifficultySelect />
+            <DifficultySelect
+                difficulty={difficulty}
+                handleDifficultyChange={handleDifficultyChange}
+            />
             <h2 className="text-3xl">
                 {riddle ? (
                     <TextGenerateEffect
                         key={riddle.question}
-                        className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400  text-4xl "
+                        className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400 text-3xl  "
                         duration={1}
                         filter={false}
                         words={riddle.question}
@@ -90,16 +106,36 @@ function Play() {
                     <Loader2 className="animate-spin size-16" />
                 )}
             </h2>
+
+            <div className="text-2xl text-primary min-h-16 text-center">
+                {answer !== "" ? (
+                    <TextGenerateEffect
+                        key={answer}
+                        className="max-w-[600px] font-normal text-primary  "
+                        duration={1}
+                        filter={false}
+                        words={answer}
+                    />
+                ) : (
+                    <TextGenerateEffect
+                        key={hint.text}
+                        className="max-w-[600px] font-normal text-primary "
+                        duration={1}
+                        filter={false}
+                        words={hint.text}
+                    />
+                )}
+            </div>
             {riddle && (
                 <RiddleForm
+                    inputValue={inputValue}
+                    handleInputChange={handleInputChange}
                     riddleId={riddle.id}
                     hintsUsed={hint.index}
                     answerShown={answer !== ""}
                 />
             )}
-            <p className="text-2xl text-primary">
-                {answer !== "" ? answer : hint.text}
-            </p>
+
             <div className="flex gap-4 w-full justify-evenly">
                 <div className="flex gap-4 items-center text-4xl">
                     <p>Stuck?</p>
@@ -108,7 +144,7 @@ function Play() {
                         variant="custom"
                         size="md"
                         disabled={answer !== ""}
-                        onClick={handleNewRiddle}
+                        onClick={() => handleNewRiddle(difficulty)}
                     >
                         Generate
                     </Button>

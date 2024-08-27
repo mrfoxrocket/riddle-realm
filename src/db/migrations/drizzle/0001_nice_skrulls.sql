@@ -1,0 +1,1 @@
+ALTER TABLE "user_riddle" DROP COLUMN IF EXISTS "user_answer";

@@ -1,0 +1,33 @@
+"use client";
+
+import React, { useState } from "react";
+
+const CenterInput = (props) => {
+    const { inputValue, handleInputChange } = props;
+
+    return (
+        <div className="flex justify-center items-center w-full p-4">
+            <div className="relative justify-center items-center w-full text-center ">
+                <input
+                    type="text"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    placeholder="Type Answer Here..."
+                    className={`w-full bg-transparent text-center text-2xl pb-2 font-medium outline-none z-10 relative ${
+                        inputValue === "" ? "border-b-2" : "border-none"
+                    }`}
+                />
+                <span
+                    className="absolute left-0 right-0 mx-auto bottom-0 border-b-2 border-primary transition-all duration-100 ease-in-out pointer-events-none"
+                    style={{
+                        width: `${
+                            inputValue.length > 0 ? inputValue.length + 5 : 0
+                        }ch`,
+                    }}
+                ></span>
+            </div>
+        </div>
+    );
+};
+
+export default CenterInput;

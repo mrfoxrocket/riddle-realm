@@ -1,6 +1,6 @@
 {
-  "id": "386efb87-c6c4-4348-9394-bf672ac39db0",
-  "prevId": "1e509aee-d714-4348-ba65-7723bcfe74c6",
+  "id": "788bd5d6-254c-4951-82e4-0812cb1a169a",
+  "prevId": "2927baa0-9a81-42de-a847-8150cf018d15",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -123,6 +123,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false
+        },
+        "solved_at": {
+          "name": "solved_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},

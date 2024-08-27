@@ -11,25 +11,45 @@ import { revalidatePath } from "next/cache";
 type Riddle = {
     id: string;
     question: string;
-    answer: string;
+    difficulty: string;
 };
 
-// REMEMBER TO REMOVE ANSWER FROM HERE AND FROM THE PLAY PAGE
-export const getRandomRiddle = async (): Promise<Riddle> => {
+export const getRandomRiddle = async (difficulty: string): Promise<Riddle> => {
     try {
-        const result = await db.execute(sql`
-            SELECT id, question, answer 
-            FROM ${riddle}
+        if (difficulty !== "all") {
+            const result = await db.execute(sql`
+            SELECT id, question, difficulty 
+            FROM ${riddle} 
+            WHERE difficulty = ${difficulty}
             ORDER BY RANDOM()
             LIMIT 1
         `);
 
-        const randomRiddle = result[0] as Riddle;
-        return {
-            id: randomRiddle.id,
-            question: randomRiddle.question,
-            answer: randomRiddle.answer,
-        };
+            console.log(difficulty);
+
+            const randomRiddle = result[0] as Riddle;
+            return {
+                id: randomRiddle.id,
+                question: randomRiddle.question,
+                difficulty: randomRiddle.difficulty,
+            };
+        } else {
+            const result = await db.execute(sql`
+                SELECT id, question 
+                FROM ${riddle} 
+                ORDER BY RANDOM()
+                LIMIT 1
+            `);
+
+            console.log(difficulty);
+
+            const randomRiddle = result[0] as Riddle;
+            return {
+                id: randomRiddle.id,
+                question: randomRiddle.question,
+                difficulty: randomRiddle.difficulty,
+            };
+        }
     } catch (error) {
         console.error("Error fetching random riddle:", error);
         throw error;
@@ -37,20 +57,19 @@ export const getRandomRiddle = async (): Promise<Riddle> => {
 };
 
 export const checkRiddleAnswer = async (
-    formData: FormData,
+    inputValue: string,
     riddleId: string,
     hintsUsed: number,
     answerShown: boolean
 ) => {
     try {
-        const text = formData.get("text") as string;
-
         const data = await db
             .select()
             .from(riddle)
             .where(eq(riddle.id, riddleId));
 
-        const result = text.toLowerCase() === data[0].answer.toLowerCase();
+        const result =
+            inputValue.toLowerCase() === data[0].answer.toLowerCase();
 
         if (result === true) {
             await db.insert(userRiddle).values({

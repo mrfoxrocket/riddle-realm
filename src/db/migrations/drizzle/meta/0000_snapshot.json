@@ -1,5 +1,5 @@
 {
-  "id": "1e509aee-d714-4348-ba65-7723bcfe74c6",
+  "id": "2927baa0-9a81-42de-a847-8150cf018d15",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -105,6 +105,13 @@
           "primaryKey": false,
           "notNull": true
         },
+        "user_answer": {
+          "name": "user_answer",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
         "solved": {
           "name": "solved",
           "type": "boolean",
@@ -116,15 +123,20 @@
           "name": "answer_shown",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
-          "default": false
+          "notNull": false
         },
         "hints_used": {
           "name": "hints_used",
           "type": "integer",
           "primaryKey": false,
+          "notNull": false
+        },
+        "solved_at": {
+          "name": "solved_at",
+          "type": "timestamp",
+          "primaryKey": false,
           "notNull": true,
-          "default": 0
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -143,7 +155,15 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "user_riddle_user_id_riddle_id_pk": {
+          "name": "user_riddle_user_id_riddle_id_pk",
+          "columns": [
+            "user_id",
+            "riddle_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     }
   },

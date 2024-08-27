@@ -21,9 +21,12 @@ CREATE TABLE IF NOT EXISTS "riddle" (
 CREATE TABLE IF NOT EXISTS "user_riddle" (
 	"user_id" uuid NOT NULL,
 	"riddle_id" uuid NOT NULL,
+	"user_answer" text DEFAULT '' NOT NULL,
 	"solved" boolean DEFAULT false NOT NULL,
-	"answer_shown" boolean DEFAULT false NOT NULL,
-	"hints_used" integer DEFAULT 0 NOT NULL
+	"answer_shown" boolean,
+	"hints_used" integer,
+	"solved_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "user_riddle_user_id_riddle_id_pk" PRIMARY KEY("user_id","riddle_id")
 );
 --> statement-breakpoint
 DO $$ BEGIN

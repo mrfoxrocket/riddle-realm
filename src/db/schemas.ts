@@ -7,6 +7,7 @@ import {
     boolean,
     foreignKey,
     primaryKey,
+    timestamp,
 } from "drizzle-orm/pg-core";
 
 export const RiddleDifficulty = pgEnum("riddle_difficulty", [
@@ -46,6 +47,7 @@ export const userRiddle = pgTable(
         solved: boolean("solved").default(false).notNull(),
         answerShown: boolean("answer_shown"),
         hintsUsed: integer("hints_used"),
+        solvedAt: timestamp("solved_at").defaultNow().notNull(),
     },
     (table) => ({
         pk: primaryKey(table.userId, table.riddleId),
