@@ -4,8 +4,8 @@ import db from "@/db";
 import { riddle, userRiddle, hint, RiddleDifficulty } from "@/db/schemas";
 
 import { getUser } from "@/lib/auth";
-import { getErrorMessage } from "@/lib/utils";
 import { and, eq, sql, gt, sum, count } from "drizzle-orm";
+import { getErrorMessage } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
 export const getTotalSolved = async () => {
