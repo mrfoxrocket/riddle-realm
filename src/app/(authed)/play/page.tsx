@@ -87,13 +87,13 @@ function Play() {
     };
 
     return (
-        <div className="flex flex-col gap-8 w-full items-center">
+        <div className="flex flex-col gap-6 w-full items-center  ">
             <h1 className="text-4xl font-bold self-center">Solve a Riddle</h1>
             <DifficultySelect
                 difficulty={difficulty}
                 handleDifficultyChange={handleDifficultyChange}
             />
-            <h2 className="text-3xl">
+            <h2 className="text-3xl  p-4 ">
                 {riddle ? (
                     <TextGenerateEffect
                         key={riddle.question}
@@ -107,7 +107,7 @@ function Play() {
                 )}
             </h2>
 
-            <div className="text-2xl text-primary min-h-16 text-center">
+            <div className="text-2xl text-primary min-h-16 text-center ">
                 {answer !== "" ? (
                     <TextGenerateEffect
                         key={answer}
