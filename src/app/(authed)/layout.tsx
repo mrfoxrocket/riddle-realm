@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Image from "next/image";
-const background = "/Designer (4).jpeg";
+const background = "/background.png";
 
 export default function Home({
     children,
@@ -14,8 +14,7 @@ export default function Home({
                 alt="background"
                 fill
                 sizes="100vw"
-                style={{ objectFit: "cover" }}
-                className="-z-10 opacity-80"
+                className="-z-10 hidden md:block md:object-contain object-bottom"
             /> */}
             <Header />
             {children}

@@ -30,18 +30,7 @@ export const getRandomRiddle = async (difficulty: string): Promise<Riddle> => {
             LIMIT 1
         `);
 
-        // SELECT id, question, difficulty
-        // FROM ${riddle}
-        // LEFT JOIN ${userRiddle} ON ${riddle}.id = ${userRiddle}.riddle_id
-        // WHERE ${userRiddle}.riddle_id IS NULL
-        // ${whereClause}
-        // ORDER BY RANDOM()
-        // LIMIT 1
-
-        console.log(difficulty);
-
         const randomRiddle = result[0] as Riddle;
-        console.log(randomRiddle);
 
         if (randomRiddle === undefined) {
             return {
@@ -72,8 +61,9 @@ export const checkRiddleAnswer = async (
             .from(riddle)
             .where(eq(riddle.id, riddleId));
 
-        const result =
-            inputValue.toLowerCase() === data[0].answer.toLowerCase();
+        const result = inputValue
+            .toLowerCase()
+            .includes(data[0].answer.toLowerCase());
 
         if (result === true) {
             await db.insert(userRiddle).values({
@@ -92,7 +82,7 @@ export const checkRiddleAnswer = async (
     }
 };
 
-export const getHints = async (riddleId) => {
+export const getHints = async (riddleId: string) => {
     try {
         const data = await db
             .select()
@@ -106,7 +96,7 @@ export const getHints = async (riddleId) => {
     }
 };
 
-export const getAnswer = async (riddleId) => {
+export const getAnswer = async (riddleId: string) => {
     try {
         const data = await db
             .select()
@@ -119,5 +109,3 @@ export const getAnswer = async (riddleId) => {
         throw error;
     }
 };
-
-// if riddleId is present in userRiddle and userId = getUser().id

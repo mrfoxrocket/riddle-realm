@@ -107,7 +107,7 @@ function Play() {
                         className="max-w-[600px] font-normal text-primary  text-3xl text-center"
                         duration={1}
                         filter={false}
-                        words="You've Solve All The Riddles in This Difficulty!"
+                        words="You've Solved All The Riddles In This Difficulty!"
                     />
                 )}
                 {riddle?.allSolved && difficulty === "all" && (
@@ -116,7 +116,7 @@ function Play() {
                         className="max-w-[600px] font-normal text-primary  text-3xl text-center"
                         duration={1}
                         filter={false}
-                        words="Congratulations! You've Solve All The Riddles We Have!"
+                        words="Congratulations! You've Solved All The Riddles We Have!"
                     />
                 )}
             </h2>
@@ -157,7 +157,7 @@ function Play() {
                     <Button
                         variant="custom"
                         size="md"
-                        disabled={answer !== ""}
+                        disabled={answer !== "" || riddle?.allSolved}
                         onClick={() => handleNewRiddle(difficulty)}
                     >
                         Generate
@@ -167,7 +167,7 @@ function Play() {
                     <p>Or</p>
                     {hint.allUsed ? (
                         <Button
-                            disabled={answer !== ""}
+                            disabled={answer !== "" || riddle?.allSolved}
                             onClick={handleGetAnswer}
                             variant="custom"
                             size="md"
@@ -176,7 +176,7 @@ function Play() {
                         </Button>
                     ) : (
                         <Button
-                            disabled={hint.allUsed}
+                            disabled={hint.allUsed || riddle?.allSolved}
                             onClick={handleGetHint}
                             variant="custom"
                             size="md"

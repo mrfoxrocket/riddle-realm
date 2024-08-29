@@ -20,7 +20,8 @@ const Stats = async () => {
         count: number;
     };
 
-    const hintsUsed = (await getHintsUsed()) as { count: string };
+    let hintsUsed = (await getHintsUsed()) as { count: string };
+    console.log(hintsUsed);
 
     return (
         <div className="flex w-full flex-col gap-4">
