@@ -12,7 +12,7 @@ const CenterInput = (props) => {
                     type="text"
                     value={inputValue}
                     onChange={handleInputChange}
-                    placeholder="Type Answer Here..."
+                    placeholder="Answer Here..."
                     className={`w-full bg-transparent text-center text-2xl pb-2 font-medium outline-none z-10 relative ${
                         inputValue === "" ? "border-b-2" : "border-none"
                     }`}

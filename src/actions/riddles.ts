@@ -103,6 +103,14 @@ export const getAnswer = async (riddleId: string) => {
             .from(riddle)
             .where(eq(riddle.id, riddleId));
 
+        await db.insert(userRiddle).values({
+            userId: (await getUser()).id,
+            riddleId,
+            solved: true,
+            answerShown: true,
+            hintsUsed: 3,
+        });
+
         return data[0].answer;
     } catch (error) {
         console.error("Error checking riddle answer:", error);

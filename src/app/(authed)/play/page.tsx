@@ -14,35 +14,23 @@ function Play() {
     const [answer, setAnswer] = useState("");
     const [difficulty, setDifficulty] = useState("all");
     const [inputValue, setInputValue] = useState("");
-
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value);
-    };
-
     const [hint, setHint] = useState({
         text: "",
         index: 0,
         allUsed: false,
     });
 
-    const handleDifficultyChange = (value: string) => {
-        setDifficulty(value);
-        handleNewRiddle(value);
+    useEffect(() => {
+        handleNewRiddle(difficulty);
+    }, [difficulty]);
+
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value);
     };
 
-    useEffect(() => {
-        const fetchRiddle = async () => {
-            try {
-                const response = await getRandomRiddle(difficulty);
-
-                setRiddle(response);
-            } catch (error) {
-                console.error("Error fetching riddle:", error);
-            }
-        };
-
-        fetchRiddle();
-    }, []);
+    const handleDifficultyChange = (value: string) => {
+        setDifficulty(value);
+    };
 
     const handleNewRiddle = async (difficulty: string) => {
         try {
@@ -84,16 +72,19 @@ function Play() {
     return (
         <div className="flex flex-col gap-6 w-full items-center  ">
             <h1 className="text-4xl font-bold self-center">Solve a Riddle</h1>
+
             <DifficultySelect
                 difficulty={difficulty}
                 handleDifficultyChange={handleDifficultyChange}
             />
+
+            {/* Riddle */}
             <h2 className="text-3xl  p-4 ">
                 {!riddle?.allSolved &&
                     (riddle ? (
                         <TextGenerateEffect
                             key={riddle.question}
-                            className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400 text-3xl  "
+                            className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400 text-3xl text-center "
                             duration={1}
                             filter={false}
                             words={riddle.question}
@@ -121,6 +112,7 @@ function Play() {
                 )}
             </h2>
 
+            {/* Answer / Hint */}
             <div className="text-2xl text-primary min-h-16 text-center ">
                 {answer !== "" ? (
                     <TextGenerateEffect
@@ -140,6 +132,8 @@ function Play() {
                     />
                 )}
             </div>
+
+            {/* RiddleForm */}
             {riddle && !riddle.allSolved && (
                 <RiddleForm
                     inputValue={inputValue}
@@ -150,6 +144,7 @@ function Play() {
                 />
             )}
 
+            {/* // Stuck? Generate a New Riddle. Or Get Hint */}
             <div className="flex gap-4 w-full justify-evenly">
                 <div className="flex gap-4 items-center text-4xl">
                     <p>Stuck?</p>
