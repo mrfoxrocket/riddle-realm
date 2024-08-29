@@ -7,12 +7,7 @@ import { getHints, getRandomRiddle, getAnswer } from "@/actions/riddles";
 import RiddleForm from "@/components/RiddleForm";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import DifficultySelect from "@/components/DifficultySelect";
-
-type Riddle = {
-    id: string;
-    question: string;
-    difficulty: string;
-};
+import { Riddle } from "@/actions/riddles";
 
 function Play() {
     const [riddle, setRiddle] = useState<Riddle | null>(null);
@@ -94,16 +89,35 @@ function Play() {
                 handleDifficultyChange={handleDifficultyChange}
             />
             <h2 className="text-3xl  p-4 ">
-                {riddle ? (
+                {!riddle?.allSolved &&
+                    (riddle ? (
+                        <TextGenerateEffect
+                            key={riddle.question}
+                            className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400 text-3xl  "
+                            duration={1}
+                            filter={false}
+                            words={riddle.question}
+                        />
+                    ) : (
+                        <Loader2 className="animate-spin size-16" />
+                    ))}
+                {riddle?.allSolved && difficulty !== "all" && (
                     <TextGenerateEffect
                         key={riddle.question}
-                        className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400 text-3xl  "
+                        className="max-w-[600px] font-normal text-primary  text-3xl text-center"
                         duration={1}
                         filter={false}
-                        words={riddle.question}
+                        words="You've Solve All The Riddles in This Difficulty!"
                     />
-                ) : (
-                    <Loader2 className="animate-spin size-16" />
+                )}
+                {riddle?.allSolved && difficulty === "all" && (
+                    <TextGenerateEffect
+                        key={riddle.question}
+                        className="max-w-[600px] font-normal text-primary  text-3xl text-center"
+                        duration={1}
+                        filter={false}
+                        words="Congratulations! You've Solve All The Riddles We Have!"
+                    />
                 )}
             </h2>
 
@@ -126,7 +140,7 @@ function Play() {
                     />
                 )}
             </div>
-            {riddle && (
+            {riddle && !riddle.allSolved && (
                 <RiddleForm
                     inputValue={inputValue}
                     handleInputChange={handleInputChange}

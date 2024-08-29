@@ -8,35 +8,52 @@ import { getErrorMessage } from "@/lib/utils";
 import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-type Riddle = {
-    id: string;
-    question: string;
-    difficulty: string;
+export type Riddle = {
+    id?: string;
+    question?: string;
+    difficulty?: string;
+    allSolved?: boolean;
 };
 
 export const getRandomRiddle = async (difficulty: string): Promise<Riddle> => {
     try {
         const whereClause =
-            difficulty !== "all"
-                ? sql`WHERE difficulty = ${difficulty}`
-                : sql``;
+            difficulty !== "all" ? sql`AND difficulty = ${difficulty}` : sql``;
 
         const result = await db.execute(sql`
             SELECT id, question, difficulty 
             FROM ${riddle} 
+            LEFT JOIN ${userRiddle} ON ${riddle}.id = ${userRiddle}.riddle_id
+            WHERE ${userRiddle}.riddle_id IS NULL
             ${whereClause}
             ORDER BY RANDOM()
             LIMIT 1
         `);
 
+        // SELECT id, question, difficulty
+        // FROM ${riddle}
+        // LEFT JOIN ${userRiddle} ON ${riddle}.id = ${userRiddle}.riddle_id
+        // WHERE ${userRiddle}.riddle_id IS NULL
+        // ${whereClause}
+        // ORDER BY RANDOM()
+        // LIMIT 1
+
         console.log(difficulty);
 
         const randomRiddle = result[0] as Riddle;
-        return {
-            id: randomRiddle.id,
-            question: randomRiddle.question,
-            difficulty: randomRiddle.difficulty,
-        };
+        console.log(randomRiddle);
+
+        if (randomRiddle === undefined) {
+            return {
+                allSolved: true,
+            };
+        } else {
+            return {
+                id: randomRiddle.id,
+                question: randomRiddle.question,
+                difficulty: randomRiddle.difficulty,
+            };
+        }
     } catch (error) {
         console.error("Error fetching random riddle:", error);
         throw error;
