@@ -19,7 +19,7 @@ export default function Header() {
                 <Button onClick={handleSignOut}>Sign Out</Button>
                 <div className="flex flex-col gap-y-2">
                     <div className="flex items-center gap-2 justify-center">
-                        <h1 className="text-6xl font-bold text-green-500">¿</h1>
+                        <h1 className="text-6xl font-bold text-primary">¿</h1>
                         <h1 className="text-5xl font-bold">RiddleRealm.</h1>
                     </div>
                     <div className="flex w-full justify-center items-center">

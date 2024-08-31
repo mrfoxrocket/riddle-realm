@@ -15,6 +15,20 @@
       "when": 1724796427230,
       "tag": "0001_nice_skrulls",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724971582769,
+      "tag": "0002_fixed_rhino",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1725000469582,
+      "tag": "0003_curly_onslaught",
+      "breakpoints": true
     }
   ]
 }

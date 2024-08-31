@@ -1,29 +1,29 @@
 "use server";
 
 import db from "@/db";
-import { riddle, userRiddle, hint, RiddleDifficulty } from "@/db/schemas";
+import {
+    riddle,
+    userRiddle,
+    hint,
+    RiddleDifficulty,
+    profile,
+} from "@/db/schemas";
 
 import { getUser } from "@/lib/auth";
 import { and, eq, sql, gt, sum, count } from "drizzle-orm";
 
 export const getMostRiddlesSolved = async () => {
     try {
-        const result = await db.select;
+        const result = await db.execute(sql`
+            SELECT profile.id, profile.username, COUNT(user_riddle.user_id) AS count
+            FROM user_riddle
+            JOIN profile ON user_riddle.user_id = profile.id
+            WHERE user_riddle.solved = true 
+            AND user_riddle.answer_shown = false
+            GROUP BY profile.username, profile.id
+            ORDER BY count DESC
+            LIMIT 50
+            `);
+        return result;
     } catch (error) {}
 };
-
-// sort by userid
-
-// most entries in userriddle with solved = true and answer_shown = false and userid is the same
-
-// get
-
-// user table
-
-// username
-// riddles solved
-// hints used
-// answers shown
-//
-//
-//

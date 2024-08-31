@@ -1,0 +1,1 @@
+ALTER TABLE "user_riddle" ADD COLUMN "username" text NOT NULL;

@@ -1,6 +1,8 @@
 "use server";
 
-import { getSupabaseAuth } from "@/lib/auth";
+import db from "@/db";
+import { profile } from "@/db/schemas";
+import { getSupabaseAuth, getUser } from "@/lib/auth";
 import { getErrorMessage } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
@@ -20,6 +22,11 @@ export const signUpAction = async (FormData: FormData) => {
                 email,
                 password,
             });
+
+        await db.insert(profile).values({
+            id: (await getUser()).id,
+            username: email,
+        });
 
         if (loginError) throw loginError;
         if (!data.session) throw new Error("No session found");

@@ -129,3 +129,5 @@ export const getMethodSolvedStats = async () => {
         { name: "noHelp", count: hintNotUsed[0].count },
     ];
 };
+
+// userId, username, riddlesSolved (without answer),

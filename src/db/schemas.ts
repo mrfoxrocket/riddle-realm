@@ -58,3 +58,8 @@ export const userRiddle = pgTable(
         }).onDelete("cascade"),
     })
 );
+
+export const profile = pgTable("profile", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    username: text("username").notNull(),
+});
