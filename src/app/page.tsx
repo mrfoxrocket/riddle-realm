@@ -7,8 +7,7 @@ import { getHints, getRandomRiddle, getAnswer } from "@/actions/riddles";
 import RiddleForm from "@/components/RiddleForm";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import DifficultySelect from "@/components/DifficultySelect";
-import { Riddle } from "@/actions/riddles";
-import Header from "@/components/Header";
+import { Riddle } from "@/lib/types";
 
 function Home() {
     const [riddle, setRiddle] = useState<Riddle | null>(null);
@@ -152,7 +151,6 @@ function Home() {
 
                     <Button
                         variant="custom"
-                        size="md"
                         disabled={answer !== "" || riddle?.allSolved}
                         onClick={() => handleNewRiddle(difficulty)}
                     >
@@ -166,7 +164,6 @@ function Home() {
                             disabled={answer !== "" || riddle?.allSolved}
                             onClick={handleGetAnswer}
                             variant="custom"
-                            size="md"
                         >
                             Reveal Answer
                         </Button>
@@ -175,7 +172,6 @@ function Home() {
                             disabled={hint.allUsed || riddle?.allSolved}
                             onClick={handleGetHint}
                             variant="custom"
-                            size="md"
                         >
                             Get Hint
                         </Button>

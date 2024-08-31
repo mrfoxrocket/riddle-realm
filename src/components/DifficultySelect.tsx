@@ -1,8 +1,9 @@
 "use client";
 
 import { TabsRadioGroup, TabsRadioTrigger } from "@/components/ui/tabRadio";
+import { DifficultySelectProps } from "@/lib/types";
 
-const DifficultySelect = (props) => {
+const DifficultySelect = (props: DifficultySelectProps) => {
     const { difficulty, handleDifficultyChange } = props;
 
     return (

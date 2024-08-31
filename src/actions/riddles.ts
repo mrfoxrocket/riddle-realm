@@ -4,16 +4,8 @@ import db from "@/db";
 import { riddle, userRiddle, hint } from "@/db/schemas";
 
 import { getUser } from "@/lib/auth";
-import { getErrorMessage } from "@/lib/utils";
-import { and, eq, sql } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-
-export type Riddle = {
-    id?: string;
-    question?: string;
-    difficulty?: string;
-    allSolved?: boolean;
-};
+import { eq, sql } from "drizzle-orm";
+import { Riddle } from "@/lib/types";
 
 export const getRandomRiddle = async (difficulty: string): Promise<Riddle> => {
     try {

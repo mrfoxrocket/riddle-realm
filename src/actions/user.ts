@@ -4,7 +4,6 @@ import db from "@/db";
 import { profile } from "@/db/schemas";
 import { getSupabaseAuth, getUser } from "@/lib/auth";
 import { getErrorMessage } from "@/lib/utils";
-import { redirect } from "next/navigation";
 
 export const signUpAction = async (FormData: FormData) => {
     try {

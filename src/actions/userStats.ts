@@ -1,12 +1,10 @@
 "use server";
 
 import db from "@/db";
-import { riddle, userRiddle, hint, RiddleDifficulty } from "@/db/schemas";
+import { riddle, userRiddle, RiddleDifficulty } from "@/db/schemas";
 
 import { getUser } from "@/lib/auth";
 import { and, eq, sql, gt, sum, count } from "drizzle-orm";
-import { getErrorMessage } from "@/lib/utils";
-import { revalidatePath } from "next/cache";
 
 export const getTotalSolved = async () => {
     try {

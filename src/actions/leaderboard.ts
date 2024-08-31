@@ -1,16 +1,7 @@
 "use server";
 
 import db from "@/db";
-import {
-    riddle,
-    userRiddle,
-    hint,
-    RiddleDifficulty,
-    profile,
-} from "@/db/schemas";
-
-import { getUser } from "@/lib/auth";
-import { and, eq, sql, gt, sum, count } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 
 export const getMostRiddlesSolved = async () => {
     try {
