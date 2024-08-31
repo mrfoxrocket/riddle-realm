@@ -8,8 +8,8 @@ import {
 import DifficultyChart from "@/components/charts/difficulty";
 import MethodSolvedChart from "@/components/charts/methodSolved";
 import StatsCard from "@/components/StatsCard";
-
 import { getUser } from "@/lib/auth";
+import LeaderboardTable from "@/components/LeaderboardTable";
 
 const Stats = async () => {
     const user = await getUser();
@@ -40,6 +40,7 @@ const Stats = async () => {
                 <DifficultyChart />
                 <MethodSolvedChart />
             </div>
+            <LeaderboardTable />
         </div>
     );
 };

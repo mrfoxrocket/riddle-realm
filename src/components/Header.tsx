@@ -14,41 +14,41 @@ export default function Header() {
     };
 
     return (
-        <header className="flex w-full flex-col items-center gap-6">
-            <div className="flex w-full justify-between">
-                <Button onClick={handleSignOut}>Sign Out</Button>
-                <div className="flex flex-col gap-y-2">
-                    <div className="flex items-center gap-2 justify-center">
+        <header className="flex flex-col sm:flex-row w-full items-center gap-6 justify-between ">
+            <Button
+                size="sm"
+                className="text-md hidden sm:inline-flex"
+                variant={"custom"}
+                onClick={handleSignOut}
+            >
+                Sign Out
+            </Button>
+            <div className="flex flex-col gap-y-2">
+                <Link href={"/"}>
+                    <div className="flex items-center gap-2 justify-center hover:scale-110 transition-all ease-in-out">
                         <h1 className="text-6xl font-bold text-primary">¿</h1>
                         <h1 className="text-5xl font-bold">RiddleRealm.</h1>
                     </div>
-                    <div className="flex w-full justify-center items-center">
-                        <Link href="/stats">
-                            <Button
-                                className="text-2xl font-bold"
-                                variant="link"
-                            >
-                                Stats
-                            </Button>
-                        </Link>
-                        <Link href="/play">
-                            <Button
-                                className="text-2xl font-bold"
-                                variant="link"
-                            >
-                                Play
-                            </Button>
-                        </Link>
-                        <Link href="/leaderboard">
-                            <Button
-                                className="text-2xl font-bold"
-                                variant="link"
-                            >
-                                Leaderboard
-                            </Button>
-                        </Link>
-                    </div>
+                </Link>
+                <div className="flex w-full justify-center items-center">
+                    <Link href="/stats">
+                        <Button className="text-2xl font-bold" variant="link">
+                            Stats
+                        </Button>
+                    </Link>
                 </div>
+            </div>
+            <ThemeToggle className="hidden sm:inline-flex" />
+
+            <div className="sm:hidden flex gap-4 items-center">
+                <Button
+                    size="sm"
+                    className="text-md"
+                    variant={"custom"}
+                    onClick={handleSignOut}
+                >
+                    Sign Out
+                </Button>
                 <ThemeToggle />
             </div>
         </header>

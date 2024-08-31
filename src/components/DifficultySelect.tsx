@@ -1,9 +1,6 @@
 "use client";
 
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { TabsRadioGroup, TabsRadioTrigger } from "@/components/tabRadio";
-import { useState } from "react";
+import { TabsRadioGroup, TabsRadioTrigger } from "@/components/ui/tabRadio";
 
 const DifficultySelect = (props) => {
     const { difficulty, handleDifficultyChange } = props;
@@ -11,6 +8,7 @@ const DifficultySelect = (props) => {
     return (
         <div className="self-center">
             <TabsRadioGroup
+                className="flex gap-2"
                 defaultValue="all"
                 value={difficulty}
                 onValueChange={handleDifficultyChange}
