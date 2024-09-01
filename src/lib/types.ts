@@ -6,19 +6,19 @@ export type Riddle = {
 };
 
 export type RiddleFormProps = {
-    riddleId: string | undefined;
+    riddleId: string;
     hintsUsed: number;
     answerShown: boolean;
     inputValue: string;
-    handleInputChange: (e) => void;
+    handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export type DifficultySelectProps = {
     difficulty: string;
-    handleDifficultyChange: (e) => void;
+    handleDifficultyChange: (value: string) => void;
 };
 
 export type CenterInputProps = {
     inputValue: string;
-    handleInputChange: (e) => void;
+    handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };

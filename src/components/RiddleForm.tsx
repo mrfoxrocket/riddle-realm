@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import CenterInput from "./CenterInput";
 import { Loader2 } from "lucide-react";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { checkRiddleAnswer } from "@/actions/riddles";
 import { RiddleFormProps } from "@/lib/types";
 

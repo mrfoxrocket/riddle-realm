@@ -24,7 +24,7 @@ function Home() {
         handleNewRiddle(difficulty);
     }, [difficulty]);
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
 
@@ -46,8 +46,9 @@ function Home() {
     };
 
     const handleGetHint = async () => {
+        if (!riddle || !riddle.id) return;
         try {
-            const hints = await getHints(riddle?.id);
+            const hints = await getHints(riddle.id);
 
             if (hints.length > 0) {
                 setHint({
@@ -63,7 +64,9 @@ function Home() {
 
     const handleGetAnswer = async () => {
         try {
-            setAnswer(await getAnswer(riddle?.id));
+            if (riddle?.id !== undefined) {
+                setAnswer(await getAnswer(riddle?.id));
+            }
         } catch (error) {
             console.error("Error fetching answer:", error);
         }
@@ -87,7 +90,7 @@ function Home() {
                             className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400 text-3xl text-center "
                             duration={1}
                             filter={false}
-                            words={riddle.question}
+                            words={riddle.question ?? ""}
                         />
                     ) : (
                         <Loader2 className="animate-spin size-16" />
@@ -134,7 +137,7 @@ function Home() {
             </div>
 
             {/* RiddleForm */}
-            {riddle && !riddle.allSolved && (
+            {riddle && riddle.id && !riddle.allSolved && (
                 <RiddleForm
                     inputValue={inputValue}
                     handleInputChange={handleInputChange}

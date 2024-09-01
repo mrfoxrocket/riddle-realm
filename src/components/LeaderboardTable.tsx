@@ -72,10 +72,10 @@ const LeaderboardTable = async () => {
                                     )}
                                 </TableCell>
                                 <TableCell className="text-xl font-semibold">
-                                    {user.username}
+                                    {user.username as string}
                                 </TableCell>
                                 <TableCell className="text-right text-2xl">
-                                    {user.count}
+                                    {user.count as number}
                                 </TableCell>
                             </TableRow>
                         ))}
