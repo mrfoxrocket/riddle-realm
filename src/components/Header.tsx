@@ -14,7 +14,7 @@ export default function Header() {
     };
 
     return (
-        <header className="flex flex-col sm:flex-row w-full items-center gap-6 justify-between ">
+        <header className="flex flex-col sm:flex-row w-full items-start gap-6 justify-between ">
             <Button
                 size="sm"
                 className="text-md hidden sm:inline-flex"

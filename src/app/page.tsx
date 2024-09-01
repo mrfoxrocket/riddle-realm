@@ -8,6 +8,7 @@ import RiddleForm from "@/components/RiddleForm";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import DifficultySelect from "@/components/DifficultySelect";
 import { Riddle } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Home() {
     const [riddle, setRiddle] = useState<Riddle | null>(null);
@@ -73,7 +74,7 @@ function Home() {
     };
 
     return (
-        <div className="flex flex-col gap-6 w-full flex-1 items-center  sm:pl-10  ">
+        <div className="flex flex-col gap-6 w-full flex-1 items-center sm:pl-10  ">
             <h1 className="text-4xl font-bold">Solve a Riddle</h1>
 
             <DifficultySelect
@@ -82,7 +83,7 @@ function Home() {
             />
 
             {/* Riddle */}
-            <h2 className="text-3xl  p-4 ">
+            <h2 className="text-3xl flex w-full p-4 justify-center text-center">
                 {!riddle?.allSolved &&
                     (riddle ? (
                         <TextGenerateEffect
@@ -93,7 +94,10 @@ function Home() {
                             words={riddle.question ?? ""}
                         />
                     ) : (
-                        <Loader2 className="animate-spin size-16" />
+                        <div className="flex w-full  items-center flex-col gap-4">
+                            <Skeleton className="h-10 rounded-full w-full max-w-[600px]" />
+                            <Skeleton className="h-10 rounded-full w-full max-w-[300px]" />
+                        </div>
                     ))}
                 {riddle?.allSolved && difficulty !== "all" && (
                     <TextGenerateEffect
@@ -137,7 +141,7 @@ function Home() {
             </div>
 
             {/* RiddleForm */}
-            {riddle && riddle.id && !riddle.allSolved && (
+            {riddle && riddle.id && !riddle.allSolved ? (
                 <RiddleForm
                     inputValue={inputValue}
                     handleInputChange={handleInputChange}
@@ -145,6 +149,11 @@ function Home() {
                     hintsUsed={hint.index}
                     answerShown={answer !== ""}
                 />
+            ) : (
+                <div className="space-y-8 flex flex-col w-full gap-4 justify-center  items-center">
+                    <Skeleton className="h-10 rounded-full w-full" />
+                    <Skeleton className="h-14 w-[200px]" />
+                </div>
             )}
 
             {/* // Stuck? Generate a New Riddle. Or Get Hint */}
@@ -153,6 +162,7 @@ function Home() {
                     <p>Stuck?</p>
 
                     <Button
+                        size="lg"
                         variant="custom"
                         disabled={answer !== "" || riddle?.allSolved}
                         onClick={() => handleNewRiddle(difficulty)}
@@ -164,6 +174,7 @@ function Home() {
                     <p>Or</p>
                     {hint.allUsed ? (
                         <Button
+                            size="lg"
                             disabled={answer !== "" || riddle?.allSolved}
                             onClick={handleGetAnswer}
                             variant="custom"
@@ -172,6 +183,7 @@ function Home() {
                         </Button>
                     ) : (
                         <Button
+                            size="lg"
                             disabled={hint.allUsed || riddle?.allSolved}
                             onClick={handleGetHint}
                             variant="custom"

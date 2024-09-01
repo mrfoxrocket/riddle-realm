@@ -20,7 +20,7 @@ const Stats = async () => {
         count: number;
     };
 
-    let hintsUsed = (await getHintsUsed()) as { count: string };
+    const hintsUsed = (await getHintsUsed()) as { count: string };
     console.log(hintsUsed);
 
     return (
