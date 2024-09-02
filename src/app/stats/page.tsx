@@ -28,12 +28,21 @@ const Stats = async () => {
             <h1 className="text-4xl font-bold">Stats</h1>
             <h2 className="text-3xl font-semibold">Hello, {user?.email}</h2>
             <div className="flex flex-col md:flex-row gap-4 ">
-                <StatsCard stat={totalSolved.count} title="Riddles Solved" />
+                <StatsCard
+                    stat={totalSolved.count}
+                    title="Riddles Solved"
+                    containerClassName="bg-primary"
+                />
                 <StatsCard
                     stat={totalAnswersShown.count}
                     title="Answers Shown"
+                    containerClassName="bg-green2"
                 />
-                <StatsCard stat={hintsUsed.count} title="Hints Used" />
+                <StatsCard
+                    stat={hintsUsed.count}
+                    title="Hints Used"
+                    containerClassName="bg-green3"
+                />
             </div>
 
             <div className="flex flex-col md:flex-row gap-4 ">

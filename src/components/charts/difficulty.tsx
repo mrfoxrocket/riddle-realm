@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
 import { getDifficultyStats } from "@/actions/userStats";
+import { WobbleCard } from "../ui/wobble-card";
 
 const chartConfig = {
     count: {
@@ -20,15 +21,15 @@ const chartConfig = {
     },
     easy: {
         label: "Easy",
-        color: "hsl(var(--chart-5))",
+        color: "hsl(var(--green-5))",
     },
     medium: {
         label: "Medium",
-        color: "hsl(var(--chart-2))",
+        color: "hsl(var(--green-2))",
     },
     hard: {
         label: "Hard",
-        color: "hsl(var(--chart-3))",
+        color: "hsl(var(--green-3))",
     },
 } satisfies ChartConfig;
 
@@ -59,35 +60,40 @@ export default function DifficultyChart() {
     }, []);
 
     return (
-        <Card className="flex flex-col w-full p-4 ">
-            <CardHeader className="items-center pb-0">
-                <CardTitle>Riddles Solved By Difficulty</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-1 pb-0">
-                <ChartContainer
-                    config={chartConfig}
-                    className="mx-auto aspect-square max-h-[250px]"
-                >
-                    <PieChart>
-                        <ChartTooltip
-                            cursor={false}
-                            content={<ChartTooltipContent hideLabel />}
-                        />
-                        <Pie
-                            data={chartData}
-                            dataKey="count"
-                            nameKey="difficulty"
-                            innerRadius={60}
-                        />
-                        <ChartLegend
-                            content={
-                                <ChartLegendContent nameKey="difficulty" />
-                            }
-                            className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
-                        />
-                    </PieChart>
-                </ChartContainer>
-            </CardContent>
-        </Card>
+        <WobbleCard
+            containerClassName="h-full bg-black p-0"
+            className="w-full text-center flex flex-col items-center p-0"
+        >
+            <Card className="flex flex-col w-full p-4 bg-transparent text-white flex-1 border-none">
+                <CardHeader className="items-center pb-0">
+                    <CardTitle>Riddles Solved By Difficulty</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-1 pb-0">
+                    <ChartContainer
+                        config={chartConfig}
+                        className="mx-auto aspect-square max-h-[250px] w-full"
+                    >
+                        <PieChart>
+                            <ChartTooltip
+                                cursor={false}
+                                content={<ChartTooltipContent hideLabel />}
+                            />
+                            <Pie
+                                data={chartData}
+                                dataKey="count"
+                                nameKey="difficulty"
+                                innerRadius={60}
+                            />
+                            <ChartLegend
+                                content={
+                                    <ChartLegendContent nameKey="difficulty" />
+                                }
+                                className="-translate-y-2 text-lg font-semibold flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+                            />
+                        </PieChart>
+                    </ChartContainer>
+                </CardContent>
+            </Card>
+        </WobbleCard>
     );
 }

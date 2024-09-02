@@ -12,7 +12,7 @@ const TabsRadioGroup = React.forwardRef<
     <RadioGroupPrimitive.Root
         ref={ref}
         className={cn(
-            "inline-flex items-center justify-center  rounded-md bg-muted p-2 text-muted-foreground flex-wrap",
+            "inline-flex items-center justify-center  rounded-md backdrop-blur-sm bg-white/40  border-primary p-2  text-muted-foreground flex-wrap",
             className
         )}
         {...props}
@@ -28,7 +28,7 @@ const TabsRadioTrigger = React.forwardRef<
     <RadioGroupPrimitive.Item
         ref={ref}
         className={cn(
-            "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-6 py-1.5  text-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  data-[state=checked]:shadow-sm hover:bg-gray-500/20",
+            "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-6 py-1.5  text-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  data-[state=checked]:shadow-sm dark:text-white ",
             className
         )}
         {...props}

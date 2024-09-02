@@ -31,23 +31,24 @@ const RiddleForm = (props: RiddleFormProps) => {
                 inputValue={inputValue}
                 handleInputChange={handleInputChange}
             />
-
-            <Button
-                variant="custom"
+            <button
                 type="submit"
                 disabled={isPending}
-                className="h-full"
                 onClick={handleSubmit}
+                className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 hover:scale-105 transition-all ease-in-out"
             >
-                {isPending ? (
-                    <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Loading...
-                    </>
-                ) : (
-                    "Submit"
-                )}
-            </Button>
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#22c55e_0%,#16a34a_50%,#15803d_100%)]" />
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-transparent px-4 py-2 text-3xl font-medium text-white backdrop-blur-3xl">
+                    {isPending ? (
+                        <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Loading...
+                        </>
+                    ) : (
+                        "Check Solution"
+                    )}
+                </span>
+            </button>
         </form>
     );
 };

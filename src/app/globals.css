@@ -24,11 +24,12 @@
         --input: 240 5.9% 90%;
         --ring: 142.1 76.2% 36.3%;
         --radius: 0.75rem;
-        --chart-1: 141.7 76.6% 73.1%;
-        --chart-2: 142.1 70.6% 45.3%;
-        --chart-3: 142.4 71.8% 29.2%;
-        --chart-4: 143.8 61.2% 20.2%;
-        --chart-5: 144.9 80.4% 10%;
+        --green-1: 141.7 76.6% 73.1%;
+        --green-2: 141.9 69.2% 58%;
+        --green-3: 142.1 70.6% 45.3%;
+        --green-4: 142.1 76.2% 36.3%;
+        --green-5: 142.4 71.8% 29.2%;
+        --green-6: 142.8 64.2% 24.1%;
     }
 
     .dark {
@@ -51,13 +52,17 @@
         --border: 240 3.7% 15.9%;
         --input: 240 3.7% 15.9%;
         --ring: 142.4 71.8% 29.2%;
-        --chart-1: 142.8 64.2% 24.1%;
-        --chart-2: 142.1 70.6% 45.3%;
-        --chart-3: 142.4 71.8% 29.2%;
-        --chart-4: 142.1 76.2% 36.3%;
-        --chart-5: 141.9 69.2% 58%;
     }
 }
+
+/* .heading {
+    background-image: url("/bg3.jpeg");
+    background-size: cover;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: white;
+    background-position: center;
+} */
 
 @layer base {
     * {

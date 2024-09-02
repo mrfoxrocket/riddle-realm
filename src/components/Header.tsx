@@ -16,9 +16,8 @@ export default function Header() {
     return (
         <header className="flex flex-col sm:flex-row w-full items-start gap-6 justify-between ">
             <Button
-                size="sm"
-                className="text-md hidden sm:inline-flex"
-                variant={"custom"}
+                className="text-lg hidden sm:inline-flex hover:bg-transparent hover:text-primary transition-all ease-in-out hover:scale-105"
+                variant={"ghost"}
                 onClick={handleSignOut}
             >
                 Sign Out
@@ -44,7 +43,7 @@ export default function Header() {
                 <Button
                     size="sm"
                     className="text-md"
-                    variant={"custom"}
+                    variant="ghost"
                     onClick={handleSignOut}
                 >
                     Sign Out

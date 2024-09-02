@@ -14,12 +14,14 @@ const CenterInput = (props: CenterInputProps) => {
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder="Answer Here..."
-                    className={`w-full bg-transparent text-center text-2xl pb-2 font-medium outline-none z-10 relative ${
-                        inputValue === "" ? "border-b-2" : "border-none"
+                    className={`w-full bg-transparent placeholder-black/50 dark:placeholder-muted-foreground text-center text-2xl pb-2 font-medium outline-none z-10 relative ${
+                        inputValue === ""
+                            ? "border-b-4 border-black/50 dark:border-muted-foreground"
+                            : "border-none"
                     }`}
                 />
                 <span
-                    className="absolute left-0 right-0 mx-auto bottom-0 border-b-2 border-primary transition-all duration-100 ease-in-out pointer-events-none"
+                    className="absolute left-0 right-0 mx-auto bottom-0 border-b-4 border-primary transition-all duration-100 ease-in-out pointer-events-none"
                     style={{
                         width: `${
                             inputValue.length > 0 ? inputValue.length + 5 : 0

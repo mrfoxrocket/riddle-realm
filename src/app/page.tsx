@@ -9,6 +9,9 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import DifficultySelect from "@/components/DifficultySelect";
 import { Riddle } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Modak } from "next/font/google";
+
+const modak = Modak({ weight: ["400"], subsets: ["latin"] });
 
 function Home() {
     const [riddle, setRiddle] = useState<Riddle | null>(null);
@@ -75,7 +78,11 @@ function Home() {
 
     return (
         <div className="flex flex-col gap-6 w-full flex-1 items-center sm:pl-10  ">
-            <h1 className="text-4xl font-bold">Solve a Riddle</h1>
+            <h1
+                className={` ${modak.className} heading text-[10vw]  font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-primary to-green5 bg-opacity-50`}
+            >
+                SOLVE A RIDDLE
+            </h1>
 
             <DifficultySelect
                 difficulty={difficulty}
@@ -83,7 +90,7 @@ function Home() {
             />
 
             {/* Riddle */}
-            <h2 className="text-3xl flex w-full p-4 justify-center text-center">
+            <h2 className="text-3xl flex w-full p-4 justify-center text-center ">
                 {!riddle?.allSolved &&
                     (riddle ? (
                         <TextGenerateEffect
@@ -157,13 +164,13 @@ function Home() {
             )}
 
             {/* // Stuck? Generate a New Riddle. Or Get Hint */}
-            <div className="flex gap-4 w-full justify-evenly ">
-                <div className="flex gap-4  items-center text-2xl md:text-4xl flex-wrap justify-center">
+            <div className="flex gap-4 w-full justify-evenly mt-10">
+                <div className="flex gap-3  items-center text-2xl md:text-4xl flex-wrap justify-center">
                     <p>Stuck?</p>
 
                     <Button
-                        size="lg"
-                        variant="custom"
+                        className="text-primary text-2xl md:text-4xl px-0 hover:bg-transparent"
+                        variant="ghost"
                         disabled={answer !== "" || riddle?.allSolved}
                         onClick={() => handleNewRiddle(difficulty)}
                     >
@@ -174,19 +181,19 @@ function Home() {
                     <p>Or</p>
                     {hint.allUsed ? (
                         <Button
-                            size="lg"
+                            className="text-primary text-2xl md:text-4xl px-0 hover:bg-transparent"
                             disabled={answer !== "" || riddle?.allSolved}
                             onClick={handleGetAnswer}
-                            variant="custom"
+                            variant="ghost"
                         >
                             Reveal Answer
                         </Button>
                     ) : (
                         <Button
-                            size="lg"
+                            className="text-primary text-2xl md:text-4xl px-0 hover:bg-transparent"
                             disabled={hint.allUsed || riddle?.allSolved}
                             onClick={handleGetHint}
-                            variant="custom"
+                            variant="ghost"
                         >
                             Get Hint
                         </Button>
