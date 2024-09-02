@@ -39,7 +39,7 @@ const Stats = async () => {
                     containerClassName="bg-green2"
                 />
                 <StatsCard
-                    stat={hintsUsed.count}
+                    stat={hintsUsed.count || 0}
                     title="Hints Used"
                     containerClassName="bg-green3"
                 />

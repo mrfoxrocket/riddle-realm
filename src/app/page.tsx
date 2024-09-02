@@ -176,7 +176,7 @@ function Home() {
                         <p>Stuck?</p>
 
                         <Button
-                            className="text-primary text-2xl md:text-4xl px-0 hover:bg-transparent"
+                            className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
                             variant="ghost"
                             disabled={answer !== "" || riddle?.allSolved}
                             onClick={() => handleNewRiddle(difficulty)}
@@ -188,7 +188,7 @@ function Home() {
                         <p>Or</p>
                         {hint.allUsed ? (
                             <Button
-                                className="text-primary text-2xl md:text-4xl px-0 hover:bg-transparent"
+                                className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
                                 disabled={answer !== "" || riddle?.allSolved}
                                 onClick={handleGetAnswer}
                                 variant="ghost"
@@ -197,7 +197,7 @@ function Home() {
                             </Button>
                         ) : (
                             <Button
-                                className="text-primary text-2xl md:text-4xl px-0 hover:bg-transparent"
+                                className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
                                 disabled={hint.allUsed || riddle?.allSolved}
                                 onClick={handleGetHint}
                                 variant="ghost"
