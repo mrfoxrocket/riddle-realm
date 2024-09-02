@@ -4,36 +4,64 @@ import { Button } from "@/components/ui/button";
 import CenterInput from "./CenterInput";
 import { Loader2 } from "lucide-react";
 
-import { useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { checkRiddleAnswer } from "@/actions/riddles";
 import { RiddleFormProps } from "@/lib/types";
 
 const RiddleForm = (props: RiddleFormProps) => {
     const [isPending, startTransition] = useTransition();
+    const [wrongAnswerMessage, setWrongAnswerMessage] = useState(false);
 
-    const { riddleId, hintsUsed, answerShown, inputValue, handleInputChange } =
-        props;
+    const {
+        riddleId,
+        hintsUsed,
+        answerShown,
+        inputValue,
+        handleInputChange,
+        riddleResult,
+        setRiddleResult,
+    } = props;
+
+    useEffect(() => {
+        setWrongAnswerMessage(false);
+    }, [inputValue]);
 
     const handleSubmit = async () => {
         startTransition(async () => {
-            await checkRiddleAnswer(
+            const result = await checkRiddleAnswer(
                 inputValue,
                 riddleId,
                 hintsUsed,
                 answerShown
             );
+
+            console.log(result);
+            console.log(inputValue);
+            setRiddleResult(result);
+
+            setWrongAnswerMessage(!result);
         });
     };
 
     return (
         <form className="space-y-8 flex flex-col w-full gap-4 justify-center  items-center">
-            <CenterInput
-                inputValue={inputValue}
-                handleInputChange={handleInputChange}
-            />
+            <div className="flex flex-col gap-2 w-full">
+                <CenterInput
+                    inputValue={inputValue}
+                    handleInputChange={handleInputChange}
+                />
+                <div className="w-full text-red-500 font-bold text-2xl text-center h-[64px] sm:h-[32px]">
+                    <p hidden={!wrongAnswerMessage}>
+                        {inputValue === ""
+                            ? "Please type in an answer."
+                            : "That is not the correct answer, please try again."}
+                    </p>
+                </div>
+            </div>
+
             <button
                 type="submit"
-                disabled={isPending}
+                disabled={isPending || riddleResult}
                 onClick={handleSubmit}
                 className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 hover:scale-105 transition-all ease-in-out"
             >

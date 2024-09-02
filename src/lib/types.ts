@@ -11,6 +11,8 @@ export type RiddleFormProps = {
     answerShown: boolean;
     inputValue: string;
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    riddleResult: boolean;
+    setRiddleResult: (result: boolean) => void;
 };
 
 export type DifficultySelectProps = {

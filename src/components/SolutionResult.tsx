@@ -1,0 +1,73 @@
+"use client";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
+
+const SolutionResult = ({
+    riddleResult,
+    handleNewRiddle,
+    answer,
+    difficulty,
+}: {
+    riddleResult: boolean;
+    handleNewRiddle: (difficulty: string) => Promise<void>;
+    answer: string;
+    difficulty: string;
+}) => {
+    const [open, setOpen] = useState(riddleResult || answer !== "");
+    const [isPending, startTransition] = useTransition();
+
+    useEffect(() => {
+        setOpen(riddleResult || answer !== "");
+        console.log("riddleResult", riddleResult);
+    }, [riddleResult, answer]);
+
+    const handleClick = async () => {
+        startTransition(async () => {
+            await handleNewRiddle(difficulty);
+            setOpen(false);
+        });
+    };
+
+    return (
+        <AlertDialog open={open}>
+            <AlertDialogContent className="flex flex-col gap-8 justify-center items-center">
+                <AlertDialogHeader>
+                    <AlertDialogTitle className="text-3xl md:text-5xl">
+                        {answer !== ""
+                            ? `The Answer was: ${answer}`
+                            : "Congratulations! You got it right!"}
+                    </AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogAction
+                        className="text-xl md:text-3xl p-6 md:p-8 dark:text-white"
+                        onClick={() => handleClick()}
+                    >
+                        {isPending ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Loading...
+                            </>
+                        ) : (
+                            "Get New Riddle"
+                        )}
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    );
+};
+
+export default SolutionResult;
