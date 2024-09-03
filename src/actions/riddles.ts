@@ -5,7 +5,7 @@ import { riddle, userRiddle, hint } from "@/db/schemas";
 
 import { getUser } from "@/lib/auth";
 import { eq, sql } from "drizzle-orm";
-import { Riddle } from "@/lib/types";
+import { Riddle, ExampleRiddle } from "@/lib/types";
 
 export const getRandomRiddle = async (difficulty: string): Promise<Riddle> => {
     try {
@@ -45,7 +45,8 @@ export const checkRiddleAnswer = async (
     inputValue: string,
     riddleId: string,
     hintsUsed: number,
-    answerShown: boolean
+    answerShown: boolean,
+    signUp?: boolean
 ) => {
     try {
         const data = await db
@@ -53,11 +54,16 @@ export const checkRiddleAnswer = async (
             .from(riddle)
             .where(eq(riddle.id, riddleId));
 
+        console.log(data[0].answer);
+        console.log(inputValue);
+
         const result = inputValue
             .toLowerCase()
             .includes(data[0].answer.toLowerCase());
 
-        if (result === true) {
+        console.log(result);
+
+        if (result === true && !signUp) {
             await db.insert(userRiddle).values({
                 userId: (await getUser()).id,
                 riddleId,
@@ -106,6 +112,34 @@ export const getAnswer = async (riddleId: string) => {
         return data[0].answer;
     } catch (error) {
         console.error("Error checking riddle answer:", error);
+        throw error;
+    }
+};
+
+export const getSignUpRiddle = async (): Promise<Riddle> => {
+    try {
+        const result = await db.execute(sql`
+            SELECT id, question, difficulty 
+            FROM ${riddle} 
+            ORDER BY RANDOM()
+            LIMIT 1
+        `);
+
+        const randomRiddle = result[0] as Riddle;
+
+        if (randomRiddle === undefined) {
+            return {
+                allSolved: true,
+            };
+        } else {
+            return {
+                id: randomRiddle.id,
+                question: randomRiddle.question,
+                difficulty: randomRiddle.difficulty,
+            };
+        }
+    } catch (error) {
+        console.error("Error fetching random riddle:", error);
         throw error;
     }
 };

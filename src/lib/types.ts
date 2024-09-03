@@ -5,6 +5,12 @@ export type Riddle = {
     allSolved?: boolean;
 };
 
+export type ExampleRiddle = {
+    id: string;
+    question: string;
+    answer: string;
+};
+
 export type RiddleFormProps = {
     riddleId: string;
     hintsUsed: number;
@@ -23,4 +29,20 @@ export type DifficultySelectProps = {
 export type CenterInputProps = {
     inputValue: string;
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export type BottomTextProps = {
+    answer?: string;
+    riddleAllSolved?: boolean | undefined;
+    hintAllUsed: boolean;
+    difficulty?: string;
+    handleNewRiddle: (difficulty: string) => void;
+    handleGetAnswer?: () => void;
+    handleGetHint: () => void;
+    answerDisabled?: boolean;
+};
+
+export type SignUpFormProps = {
+    riddleId: string;
+    hintsUsed: number;
 };

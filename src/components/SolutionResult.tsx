@@ -42,9 +42,9 @@ const SolutionResult = ({
 
     return (
         <AlertDialog open={open}>
-            <AlertDialogContent className="flex flex-col gap-8 justify-center items-center">
+            <AlertDialogContent className="flex flex-col gap-8 justify-center items-center ">
                 <AlertDialogHeader>
-                    <AlertDialogTitle className="text-3xl md:text-5xl">
+                    <AlertDialogTitle className="text-3xl md:text-5xl w-full text-center">
                         {answer !== ""
                             ? `The Answer was: ${answer}`
                             : "Congratulations! You got it right!"}
@@ -61,7 +61,7 @@ const SolutionResult = ({
                                 Loading...
                             </>
                         ) : (
-                            "Get New Riddle"
+                            "Next Riddle"
                         )}
                     </AlertDialogAction>
                 </AlertDialogFooter>

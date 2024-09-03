@@ -13,6 +13,7 @@ import { Modak } from "next/font/google";
 import RiddleText from "@/components/RiddleText";
 import SolutionResult from "@/components/SolutionResult";
 import Confetti from "react-dom-confetti";
+import BottomText from "@/components/BottomText";
 
 const modak = Modak({ weight: ["400"], subsets: ["latin"] });
 
@@ -170,43 +171,15 @@ function Home() {
                     </div>
                 )}
 
-                {/* // Stuck? Generate a New Riddle. Or Get Hint */}
-                <div className="flex gap-4 w-full justify-evenly mt-10">
-                    <div className="flex gap-3  items-center text-2xl md:text-4xl flex-wrap justify-center">
-                        <p>Stuck?</p>
-
-                        <Button
-                            className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
-                            variant="ghost"
-                            disabled={answer !== "" || riddle?.allSolved}
-                            onClick={() => handleNewRiddle(difficulty)}
-                        >
-                            Generate
-                        </Button>
-
-                        <p>a New Riddle.</p>
-                        <p>Or</p>
-                        {hint.allUsed ? (
-                            <Button
-                                className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
-                                disabled={answer !== "" || riddle?.allSolved}
-                                onClick={handleGetAnswer}
-                                variant="ghost"
-                            >
-                                Reveal Answer
-                            </Button>
-                        ) : (
-                            <Button
-                                className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
-                                disabled={hint.allUsed || riddle?.allSolved}
-                                onClick={handleGetHint}
-                                variant="ghost"
-                            >
-                                Get Hint
-                            </Button>
-                        )}
-                    </div>
-                </div>
+                <BottomText
+                    answer={answer}
+                    riddleAllSolved={riddle?.allSolved}
+                    hintAllUsed={hint.allUsed}
+                    difficulty={difficulty}
+                    handleNewRiddle={handleNewRiddle}
+                    handleGetAnswer={handleGetAnswer}
+                    handleGetHint={handleGetHint}
+                />
             </div>
         </>
     );

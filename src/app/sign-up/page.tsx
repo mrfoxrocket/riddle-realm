@@ -1,93 +1,120 @@
 "use client";
 
-import React, { useTransition } from "react";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import getExampleRiddle from "@/lib/exampleRiddles";
+import { FlipWords } from "@/components/ui/flip-words";
+import getRandomHeading from "@/lib/headings";
+import BottomText from "@/components/BottomText";
+import { getHints, getRandomRiddle, getSignUpRiddle } from "@/actions/riddles";
+import { useEffect, useState } from "react";
+import { Riddle } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { Loader2 } from "lucide-react";
-import { signUpAction } from "@/actions/user";
+import SignUpForm from "@/components/SignUpForm";
 
-function SignUpPage() {
-    const form = useForm();
-    const router = useRouter();
-    const [isPending, startTransition] = useTransition();
+const Page = () => {
+    const [riddle, setRiddle] = useState<Riddle | null>(null);
+    const [heading] = useState(getRandomHeading());
+    const [{ exampleRiddle, usernames }] = useState(getExampleRiddle());
 
-    const handleSubmit = async (formData: FormData) => {
-        startTransition(async () => {
-            const { errorMessage } = await signUpAction(formData);
-            if (!errorMessage) {
-                router.replace("/");
-                toast.success(
-                    "Account created successfully\nYou are now logged in",
-                    { duration: 5000 }
-                );
-            } else {
-                toast.error(errorMessage, { duration: 5000 });
+    const [hint, setHint] = useState({
+        text: "",
+        index: 0,
+        allUsed: false,
+    });
+
+    const handleNewRiddle = async () => {
+        try {
+            const response = await getSignUpRiddle();
+            setRiddle(response);
+            setHint({ text: "", index: 0, allUsed: false });
+        } catch (error) {
+            console.error("Error fetching new riddle:", error);
+        }
+    };
+
+    const handleGetHint = async () => {
+        if (!riddle || !riddle.id) return;
+        try {
+            const hints = await getHints(riddle.id);
+
+            if (hints.length > 0) {
+                setHint({
+                    text: hints[hint.index].hintText,
+                    index: hint.index + 1,
+                    allUsed: hints.length === hint.index + 1,
+                });
             }
-        });
+        } catch (error) {
+            console.error("Error fetching hint:", error);
+        }
     };
 
     return (
-        <div className="p-24">
-            <Form {...form}>
-                <form action={handleSubmit} className="space-y-8">
-                    <FormField
-                        control={form.control}
-                        disabled={isPending}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Email" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
+        <div className="  flex flex-1 gap-36 justify-center items-center pb-80 bg-transparent h-full ">
+            <div className="flex flex-col gap-10 text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400 justify-between py-6">
+                <h2 className="font-bold  text-5xl max-w-[900px] text-green-500">
+                    {heading}
+                </h2>
+                {!riddle ? (
+                    <>
+                        <TextGenerateEffect
+                            key={exampleRiddle}
+                            className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400  text-4xl "
+                            duration={1}
+                            filter={false}
+                            words={exampleRiddle}
+                        />
+                        <FlipWords
+                            words={usernames}
+                            duration={5000}
+                            className="text-green-500 font-bold self-end"
+                        />
+                        <p>
+                            Ready to Try for Yourself?
+                            <Button
+                                className="text-primary font-semibold text-2xl md:text-4xl hover:bg-transparent px-4"
+                                variant="ghost"
+                                onClick={() => handleNewRiddle()}
+                            >
+                                Click Here
+                            </Button>
+                            to Generate a New Riddle
+                        </p>
+                    </>
+                ) : (
+                    <>
+                        {riddle && riddle.question && (
+                            <TextGenerateEffect
+                                key={riddle.id}
+                                className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400  text-4xl  "
+                                duration={1}
+                                filter={false}
+                                words={riddle.question}
+                            />
                         )}
-                    />
-                    <FormField
-                        control={form.control}
-                        disabled={isPending}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="password"
-                                        placeholder="Password"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
 
-                    <Button disabled={isPending} type="submit">
-                        {isPending ? (
-                            <>
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Loading...
-                            </>
-                        ) : (
-                            "Submit"
-                        )}
-                    </Button>
-                </form>
-            </Form>
+                        <div className="text-2xl text-primary min-h-16 text-center self-end">
+                            <TextGenerateEffect
+                                key={hint.text}
+                                className="max-w-[600px] font-normal text-primary "
+                                duration={1}
+                                filter={false}
+                                words={hint.text}
+                            />
+                        </div>
+
+                        <BottomText
+                            hintAllUsed={hint.allUsed}
+                            handleNewRiddle={handleNewRiddle}
+                            handleGetHint={handleGetHint}
+                            answerDisabled={true}
+                        />
+                    </>
+                )}
+            </div>
+            <SignUpForm riddleId={riddle?.id || ""} hintsUsed={hint.index} />
         </div>
     );
-}
+};
 
-export default SignUpPage;
+export default Page;

@@ -1,18 +1,42 @@
 "use server";
 
 import db from "@/db";
-import { profile } from "@/db/schemas";
+import { profile, userRiddle } from "@/db/schemas";
 import { getSupabaseAuth, getUser } from "@/lib/auth";
-import { getErrorMessage } from "@/lib/utils";
+import { checkRiddleAnswer } from "./riddles";
 
-export const signUpAction = async (FormData: FormData) => {
+export const signUpAction = async (
+    data: {
+        username: string;
+        password: string;
+        confirmPassword: string;
+    },
+    riddleId: string,
+    hintsUsed: number
+): Promise<boolean | { errorMessage: string }> => {
+    const { username, password } = data;
+    const email = username + "@email.com";
+
     try {
-        const email = FormData.get("email") as string;
-        const password = FormData.get("password") as string;
+        if (!riddleId) throw new Error("Please generate a riddle first");
+
+        const answerCorrect = await checkRiddleAnswer(
+            username,
+            riddleId,
+            hintsUsed,
+            false,
+            true
+        );
+        if (!answerCorrect) throw new Error("Username must include answer");
 
         const { error } = await getSupabaseAuth().signUp({
             email,
             password,
+            options: {
+                data: {
+                    username,
+                },
+            },
         });
         if (error) throw error;
 
@@ -22,23 +46,37 @@ export const signUpAction = async (FormData: FormData) => {
                 password,
             });
 
+        const user = await getUser();
+
         await db.insert(profile).values({
-            id: (await getUser()).id,
-            username: email,
+            id: user.id,
+            username,
+        });
+
+        await db.insert(userRiddle).values({
+            userId: user.id,
+            riddleId,
+            solved: true,
+            answerShown: false,
+            hintsUsed,
         });
 
         if (loginError) throw loginError;
         if (!data.session) throw new Error("No session found");
 
-        return { errorMessage: null };
+        return true;
     } catch (error) {
-        return { errorMessage: getErrorMessage(error) };
+        console.error(error);
+        return {
+            errorMessage:
+                error instanceof Error ? error.message : String(error),
+        };
     }
 };
 
 export const signInAction = async (FormData: FormData) => {
     try {
-        const email = FormData.get("email") as string;
+        const email = (FormData.get("email") as string) + "@email.com";
         const password = FormData.get("password") as string;
 
         const { data, error: loginError } =
@@ -52,7 +90,7 @@ export const signInAction = async (FormData: FormData) => {
 
         return { errorMessage: null };
     } catch (error) {
-        return { errorMessage: getErrorMessage(error) };
+        console.error(error);
     }
 };
 
@@ -64,6 +102,6 @@ export const signOutAction = async () => {
 
         return { errorMessage: null };
     } catch (error) {
-        return { errorMessage: getErrorMessage(error) };
+        console.error(error);
     }
 };
