@@ -32,7 +32,7 @@ export default function RootLayout({
                     dark:bg-gradient-to-t dark:from-primary/80 dark:via-[#283328] via-99% dark:to-[#16151a]
                     "
                     >
-                        <Header />
+                        <Header  />
                         {children}
                     </main>
                 </ThemeProvider>

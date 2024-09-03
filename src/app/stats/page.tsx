@@ -26,7 +26,9 @@ const Stats = async () => {
     return (
         <div className="flex w-full flex-col gap-4">
             <h1 className="text-4xl font-bold">Stats</h1>
-            <h2 className="text-3xl font-semibold">Hello, {user?.email}</h2>
+            <h2 className="text-3xl font-semibold">
+                Hello, {user?.user_metadata.username}
+            </h2>
             <div className="flex flex-col md:flex-row gap-4 ">
                 <StatsCard
                     stat={totalSolved.count}
