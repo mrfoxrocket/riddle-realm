@@ -1,6 +1,5 @@
 "use client";
 
-import Confetti from "react-dom-confetti";
 import { Loader2 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
@@ -30,51 +29,33 @@ import {
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { signUpAction } from "@/actions/user";
-import { SignUpFormProps } from "@/lib/types";
+import { signInAction } from "@/actions/user";
 
-const SignUpForm = (props: SignUpFormProps) => {
-    const [answerFound, setAnswerFound] = useState(false);
+const SignInForm = () => {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
 
-    const { riddleId, hintsUsed } = props;
-
-    const schema = z
-        .object({
-            username: z
-                .string()
-                .min(3, "Username must be at least 3 characters")
-                .max(20, "Username must be less than 20 characters")
-                .regex(
-                    /^(?!.*([_.])\1)[a-zA-Z0-9._]+$/,
-                    "Username must only contain letters, numbers, and non-consecutive underscores or dots"
-                ),
-            password: z
-                .string()
-                .min(8, "Password must be at least 8 characters"),
-            confirmPassword: z
-                .string()
-                .min(8, "Password must be at least 8 characters"),
-        })
-        .refine((data) => data.password === data.confirmPassword, {
-            message: "Passwords do not match",
-            path: ["confirmPassword"],
-        });
+    const schema = z.object({
+        username: z
+            .string()
+            .min(3, "Username must be at least 3 characters")
+            .max(20, "Username must be less than 20 characters")
+            .regex(
+                /^(?!.*([_.])\1)[a-zA-Z0-9._]+$/,
+                "Username must only contain letters, numbers, and non-consecutive underscores or dots"
+            ),
+        password: z.string().min(8, "Password must be at least 8 characters"),
+    });
 
     const form = useForm<z.infer<typeof schema>>({
         resolver: zodResolver(schema),
         mode: "onChange",
     });
 
-    const onSubmit = async (data: {
-        username: string;
-        password: string;
-        confirmPassword: string;
-    }) => {
+    const onSubmit = async (data: { username: string; password: string }) => {
         startTransition(async () => {
             try {
-                const result = await signUpAction(data, riddleId, hintsUsed);
+                const result = await signInAction(data);
 
                 if (typeof result === "object") {
                     form.setError("username", {
@@ -82,7 +63,6 @@ const SignUpForm = (props: SignUpFormProps) => {
                         message: result.errorMessage,
                     });
                 } else {
-                    setAnswerFound(true);
                     router.replace("/");
                 }
             } catch (err) {
@@ -99,11 +79,10 @@ const SignUpForm = (props: SignUpFormProps) => {
             >
                 <Card className="w-full  sm:w-96 bg-transparent border-none shadow-none">
                     <CardHeader>
-                        <CardTitle>Create your account</CardTitle>
+                        <CardTitle>Welcome Back!</CardTitle>
 
                         <CardDescription className="text-md">
-                            Make sure to add the answer to the riddle in your
-                            username otherwise... You Shall Not Pass!
+                            Enter your username and password to continue
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-y-8">
@@ -113,27 +92,6 @@ const SignUpForm = (props: SignUpFormProps) => {
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <Confetti
-                                        active={answerFound}
-                                        config={{
-                                            angle: 360,
-                                            spread: 360,
-                                            startVelocity: 80,
-                                            elementCount: 138,
-                                            dragFriction: 0.15,
-                                            duration: 5500,
-                                            stagger: 3,
-                                            width: "15px",
-                                            height: "24px",
-                                            colors: [
-                                                "#88D969",
-                                                "#46CB18",
-                                                "#06A10B",
-                                                "#1D800E",
-                                                "#2BAB27",
-                                            ],
-                                        }}
-                                    />
                                     <FormLabel className="hidden">
                                         Username
                                     </FormLabel>
@@ -144,12 +102,6 @@ const SignUpForm = (props: SignUpFormProps) => {
                                         />
                                     </FormControl>
                                     <FormMessage />
-                                    {answerFound && (
-                                        <p className="text-green-500 font-semibold">
-                                            Congratulations you solved the
-                                            riddle!
-                                        </p>
-                                    )}
                                 </FormItem>
                             )}
                         />
@@ -174,27 +126,6 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            name="confirmPassword"
-                            disabled={isPending}
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="hidden">
-                                        Confirm Password
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className=""
-                                            type="password"
-                                            placeholder="Confirm Password"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
                     </CardContent>
                     <CardFooter>
                         <div className="grid w-full gap-y-4">
@@ -205,12 +136,12 @@ const SignUpForm = (props: SignUpFormProps) => {
                                         Loading...
                                     </>
                                 ) : (
-                                    "Submit"
+                                    "Enter"
                                 )}
                             </Button>
                             <Button variant="link" size="sm" asChild>
-                                <Link href="/sign-in">
-                                    Already have an account? Sign in
+                                <Link href="/sign-up">
+                                    Don't have an account? Sign up
                                 </Link>
                             </Button>
                         </div>
@@ -221,4 +152,4 @@ const SignUpForm = (props: SignUpFormProps) => {
     );
 };
 
-export default SignUpForm;
+export default SignInForm;

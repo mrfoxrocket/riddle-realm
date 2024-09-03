@@ -74,10 +74,13 @@ export const signUpAction = async (
     }
 };
 
-export const signInAction = async (FormData: FormData) => {
+export const signInAction = async (signInData: {
+    username: string;
+    password: string;
+}): Promise<boolean | { errorMessage: string }> => {
     try {
-        const email = (FormData.get("email") as string) + "@email.com";
-        const password = FormData.get("password") as string;
+        const { username, password } = signInData;
+        const email = username + "@email.com";
 
         const { data, error: loginError } =
             await getSupabaseAuth().signInWithPassword({
@@ -88,9 +91,13 @@ export const signInAction = async (FormData: FormData) => {
         if (loginError) throw loginError;
         if (!data.session) throw new Error("No session found");
 
-        return { errorMessage: null };
+        return true;
     } catch (error) {
         console.error(error);
+        return {
+            errorMessage:
+                error instanceof Error ? error.message : String(error),
+        };
     }
 };
 
