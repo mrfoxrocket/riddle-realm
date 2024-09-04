@@ -3,8 +3,10 @@
 import React, { useEffect } from "react";
 import { Button } from "./ui/button";
 import { BottomTextProps } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 const BottomText = ({
+    className,
     answer = "",
     riddleAllSolved = false,
     hintAllUsed,
@@ -15,13 +17,13 @@ const BottomText = ({
     answerDisabled,
 }: BottomTextProps) => {
     return (
-        <div className="flex gap-4 w-full justify-evenly mt-10">
-            <div className="flex gap-3  items-center text-2xl md:text-4xl flex-wrap justify-center">
+        <div className={cn("flex gap-4 w-full justify-evenly", className)}>
+            <div className="flex gap-3  items-center text-4xl flex-wrap justify-center">
                 <p>Stuck?</p>
 
                 {
                     <Button
-                        className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
+                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent"
                         variant="ghost"
                         disabled={answer !== "" || riddleAllSolved}
                         onClick={() => handleNewRiddle(difficulty || "all")}
@@ -34,7 +36,7 @@ const BottomText = ({
                 {!hintAllUsed && <p>Or</p>}
                 {hintAllUsed && !answerDisabled ? (
                     <Button
-                        className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
+                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent"
                         disabled={answer !== "" || riddleAllSolved}
                         onClick={handleGetAnswer}
                         variant="ghost"
@@ -43,7 +45,7 @@ const BottomText = ({
                     </Button>
                 ) : (
                     <Button
-                        className="text-primary font-semibold text-2xl md:text-4xl px-0 hover:bg-transparent"
+                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent"
                         disabled={hintAllUsed || riddleAllSolved}
                         onClick={handleGetHint}
                         variant="ghost"

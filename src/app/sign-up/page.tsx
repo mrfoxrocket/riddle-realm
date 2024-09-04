@@ -1,15 +1,18 @@
 "use client";
 
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
-import getExampleRiddle from "@/lib/exampleRiddles";
-import { FlipWords } from "@/components/ui/flip-words";
-import getRandomHeading from "@/lib/headings";
-import BottomText from "@/components/BottomText";
-import { getHints, getRandomRiddle, getSignUpRiddle } from "@/actions/riddles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import { Riddle } from "@/lib/types";
+import getExampleRiddle from "@/lib/exampleRiddles";
+import getRandomHeading from "@/lib/headings";
+import { getHints, getSignUpRiddle } from "@/actions/riddles";
+
+import BottomText from "@/components/BottomText";
 import { Button } from "@/components/ui/button";
 import SignUpForm from "@/components/SignUpForm";
+
+import { FlipWords } from "@/components/ui/flip-words";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 const Page = () => {
     const [riddle, setRiddle] = useState<Riddle | null>(null);
@@ -50,29 +53,63 @@ const Page = () => {
     };
 
     return (
-        <div className="  flex flex-1 gap-36 justify-center items-center pb-80 bg-transparent h-full ">
-            <div className="flex flex-col gap-10 text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400 justify-between py-6">
-                <h2 className="font-bold  text-5xl max-w-[900px] text-green-500">
-                    {heading}
-                </h2>
-                {!riddle ? (
-                    <>
-                        <TextGenerateEffect
-                            key={exampleRiddle}
-                            className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400  text-4xl "
-                            duration={1}
-                            filter={false}
-                            words={exampleRiddle}
-                        />
-                        <FlipWords
-                            words={usernames}
-                            duration={5000}
-                            className="text-green-500 font-bold self-end"
-                        />
-                        <p>
+        <div className="flex flex-col justify-between py-20 flex-1 ">
+            <div className="flex flex-col lg:flex-row text-center lg:text-start gap-y-10 lg:gap-x-36 items-center lg:items-start ">
+                <div className="flex flex-1 flex-col gap-10 text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400 justify-between py-6 lg:self-start ">
+                    <h2 className="font-bold  text-5xl max-w-[900px] text-green-500 ">
+                        {heading}
+                    </h2>
+                    <div className="flex  flex-1 justify-center lg:justify-start ">
+                        {!riddle ? (
+                            <TextGenerateEffect
+                                key={exampleRiddle}
+                                className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400  text-4xl"
+                                duration={1}
+                                filter={false}
+                                words={exampleRiddle}
+                            />
+                        ) : (
+                            riddle &&
+                            riddle.question && (
+                                <TextGenerateEffect
+                                    key={riddle.id}
+                                    className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400  text-4xl  "
+                                    duration={1}
+                                    filter={false}
+                                    words={riddle.question}
+                                />
+                            )
+                        )}
+                    </div>
+                    <div className=" flex justify-center lg:justify-end min-h-16 items-center">
+                        {!riddle ? (
+                            <FlipWords
+                                words={usernames}
+                                duration={5000}
+                                className="font-bold"
+                            />
+                        ) : (
+                            riddle &&
+                            riddle.question && (
+                                <div className="text-2xl text-primary text-center">
+                                    <TextGenerateEffect
+                                        key={hint.text}
+                                        className="max-w-[600px] font-normal text-primary "
+                                        duration={1}
+                                        filter={false}
+                                        words={hint.text}
+                                    />
+                                </div>
+                            )
+                        )}
+                    </div>
+                </div>
+                <div className="lg:hidden  flex justify-start md:justify-center min-h-16 items-center">
+                    {!riddle ? (
+                        <p className="text-4xl">
                             Ready to Try for Yourself?
                             <Button
-                                className="text-primary font-semibold text-2xl md:text-4xl hover:bg-transparent px-4"
+                                className="text-primary font-semibold text-4xl hover:bg-transparent px-4"
                                 variant="ghost"
                                 onClick={() => handleNewRiddle()}
                             >
@@ -80,39 +117,50 @@ const Page = () => {
                             </Button>
                             to Generate a New Riddle
                         </p>
-                    </>
+                    ) : (
+                        riddle &&
+                        riddle.question && (
+                            <BottomText
+                                className=""
+                                hintAllUsed={hint.allUsed}
+                                handleNewRiddle={handleNewRiddle}
+                                handleGetHint={handleGetHint}
+                                answerDisabled={true}
+                            />
+                        )
+                    )}
+                </div>
+                <SignUpForm
+                    riddleId={riddle?.id || ""}
+                    hintsUsed={hint.index}
+                />
+            </div>
+            <div className="hidden lg:flex justify-start md:justify-center min-h-16 items-center">
+                {!riddle ? (
+                    <p className="text-4xl">
+                        Ready to Try for Yourself?
+                        <Button
+                            className="text-primary font-semibold text-4xl hover:bg-transparent px-4"
+                            variant="ghost"
+                            onClick={() => handleNewRiddle()}
+                        >
+                            Click Here
+                        </Button>
+                        to Generate a New Riddle
+                    </p>
                 ) : (
-                    <>
-                        {riddle && riddle.question && (
-                            <TextGenerateEffect
-                                key={riddle.id}
-                                className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400  text-4xl  "
-                                duration={1}
-                                filter={false}
-                                words={riddle.question}
-                            />
-                        )}
-
-                        <div className="text-2xl text-primary min-h-16 text-center self-end">
-                            <TextGenerateEffect
-                                key={hint.text}
-                                className="max-w-[600px] font-normal text-primary "
-                                duration={1}
-                                filter={false}
-                                words={hint.text}
-                            />
-                        </div>
-
+                    riddle &&
+                    riddle.question && (
                         <BottomText
+                            className=""
                             hintAllUsed={hint.allUsed}
                             handleNewRiddle={handleNewRiddle}
                             handleGetHint={handleGetHint}
                             answerDisabled={true}
                         />
-                    </>
+                    )
                 )}
             </div>
-            <SignUpForm riddleId={riddle?.id || ""} hintsUsed={hint.index} />
         </div>
     );
 };

@@ -17,7 +17,7 @@ export default function Header() {
     };
 
     return (
-        <header className="flex flex-col sm:flex-row w-full items-center gap-6 justify-between ">
+        <header className="flex flex-col sm:flex-row w-full items-center gap-6 justify-between border border-red-500 ">
             {!signedOut && (
                 <Button
                     className="text-lg hidden sm:inline-flex hover:bg-transparent hover:text-primary transition-all ease-in-out hover:scale-105"

@@ -32,6 +32,7 @@ export type CenterInputProps = {
 };
 
 export type BottomTextProps = {
+    className?: string;
     answer?: string;
     riddleAllSolved?: boolean | undefined;
     hintAllUsed: boolean;
