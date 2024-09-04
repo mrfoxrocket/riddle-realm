@@ -54,9 +54,9 @@ const Page = () => {
 
     return (
         <div className="flex flex-col justify-between py-20 flex-1 ">
-            <div className="flex flex-col lg:flex-row text-center lg:text-start gap-y-10 lg:gap-x-36 items-center lg:items-start ">
-                <div className="flex flex-1 flex-col gap-10 text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400 justify-between py-6 lg:self-start ">
-                    <h2 className="font-bold  text-5xl max-w-[900px] text-green-500 ">
+            <div className="flex flex-col lg:flex-row text-center lg:text-start gap-y-10 lg:gap-x-36 items-center lg:items-start">
+                <div className="flex flex-1 flex-col gap-10 text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400 justify-between py-6 lg:self-start  ">
+                    <h2 className="font-bold text-5xl max-w-[900px] text-green-500">
                         {heading}
                     </h2>
                     <div className="flex  flex-1 justify-center lg:justify-start ">
@@ -94,7 +94,7 @@ const Page = () => {
                                 <div className="text-2xl text-primary text-center">
                                     <TextGenerateEffect
                                         key={hint.text}
-                                        className="max-w-[600px] font-normal text-primary "
+                                        className="max-w-[600px] font-normal text-primary animate-slow-pulse "
                                         duration={1}
                                         filter={false}
                                         words={hint.text}
@@ -137,10 +137,10 @@ const Page = () => {
             </div>
             <div className="hidden lg:flex justify-start md:justify-center min-h-16 items-center">
                 {!riddle ? (
-                    <p className="text-4xl">
+                    <p className="text-4xl ">
                         Ready to Try for Yourself?
                         <Button
-                            className="text-primary font-semibold text-4xl hover:bg-transparent px-4"
+                            className="text-primary font-semibold text-4xl hover:bg-transparent px-4 animate-bounce "
                             variant="ghost"
                             onClick={() => handleNewRiddle()}
                         >

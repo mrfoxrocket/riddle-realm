@@ -23,7 +23,7 @@ const BottomText = ({
 
                 {
                     <Button
-                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent"
+                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent  animate-wiggle disabled:animate-none"
                         variant="ghost"
                         disabled={answer !== "" || riddleAllSolved}
                         onClick={() => handleNewRiddle(difficulty || "all")}
@@ -36,7 +36,7 @@ const BottomText = ({
                 {!hintAllUsed && <p>Or</p>}
                 {hintAllUsed && !answerDisabled ? (
                     <Button
-                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent"
+                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent  animate-wiggle disabled:animate-none "
                         disabled={answer !== "" || riddleAllSolved}
                         onClick={handleGetAnswer}
                         variant="ghost"
@@ -45,7 +45,7 @@ const BottomText = ({
                     </Button>
                 ) : (
                     <Button
-                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent"
+                        className="text-primary font-semibold text-4xl px-0 hover:bg-transparent  animate-wiggle disabled:animate-none "
                         disabled={hintAllUsed || riddleAllSolved}
                         onClick={handleGetHint}
                         variant="ghost"
