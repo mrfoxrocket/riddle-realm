@@ -145,7 +145,7 @@ function Home() {
                     ) : (
                         <TextGenerateEffect
                             key={hint.text}
-                            className="max-w-[600px] font-normal text-primary "
+                            className="max-w-[600px] font-normal text-primary animate-slow-pulse"
                             duration={1}
                             filter={false}
                             words={hint.text}
