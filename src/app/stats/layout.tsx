@@ -1,4 +1,6 @@
-export const metadata = {
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
     title: "RiddleRealm Stats | Your Puzzle Performance",
     description:
         "View detailed statistics about your riddle-solving performance. Track your progress, achievements, and compare your stats with others in RiddleRealm.",

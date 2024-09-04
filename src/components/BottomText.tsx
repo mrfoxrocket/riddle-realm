@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect } from "react";
 import { Button } from "./ui/button";
 import { BottomTextProps } from "@/lib/types";
 import { cn } from "@/lib/utils";

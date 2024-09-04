@@ -55,15 +55,6 @@
     }
 }
 
-/* .heading {
-    background-image: url("/bg3.jpeg");
-    background-size: cover;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: white;
-    background-position: center;
-} */
-
 @layer base {
     * {
         @apply border-border;

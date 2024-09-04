@@ -1,7 +1,5 @@
-import React from "react";
 import { Riddle } from "@/lib/types";
 import { TextGenerateEffect } from "./ui/text-generate-effect";
-import { Skeleton } from "./ui/skeleton";
 const RiddleText = ({
     riddle,
     difficulty,

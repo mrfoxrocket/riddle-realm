@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 
 const dosis = Dosis({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "RiddleRealm | Enter a World of Riddles",
     description:
         "Dive into a world of riddles tailored just for you. Solve challenges, track your progress, and compare your achievements with others in RiddleRealm.",

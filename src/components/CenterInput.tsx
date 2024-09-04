@@ -1,7 +1,6 @@
 "use client";
 
 import { CenterInputProps } from "@/lib/types";
-import React, { useState } from "react";
 
 const CenterInput = (props: CenterInputProps) => {
     const { inputValue, handleInputChange } = props;

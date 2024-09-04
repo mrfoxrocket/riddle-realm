@@ -27,7 +27,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import Link from "next/link";
 import { signInAction } from "@/actions/user";
 
@@ -147,7 +147,7 @@ const SignInForm = () => {
                             </Button>
                             <Button variant="link" size="sm" asChild>
                                 <Link href="/sign-up">
-                                    Don't have an account? Sign up
+                                    Don&rsquo;t have an account? Sign up
                                 </Link>
                             </Button>
                         </div>

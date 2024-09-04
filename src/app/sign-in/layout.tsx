@@ -1,4 +1,6 @@
-export const metadata = {
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
     title: "Sign In | RiddleRealm",
     description:
         "Sign in to your RiddleRealm account. Continue solving riddles and challenging yourself!",

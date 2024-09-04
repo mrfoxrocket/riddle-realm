@@ -1,13 +1,4 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
 import { WobbleCard } from "./ui/wobble-card";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -37,14 +28,3 @@ const StatsCard = (props: Props) => {
 };
 
 export default StatsCard;
-
-// return (
-//     <Card className="flex flex-col items-center w-full py-4 text-center ">
-//         <CardHeader>
-//             <CardTitle>{title}</CardTitle>
-//         </CardHeader>
-//         <CardContent>
-//             <p className="text-5xl">{stat}</p>
-//         </CardContent>
-//     </Card>
-// );
