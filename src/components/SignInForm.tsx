@@ -74,18 +74,20 @@ const SignInForm = () => {
     return (
         <Form {...form}>
             <form
-                className="h-full items-center flex "
+                className="h-full items-center flex w-full md:max-w-[600px]"
                 onSubmit={form.handleSubmit(onSubmit)}
             >
-                <Card className="w-full  sm:w-96 bg-transparent border-none shadow-none">
+                <Card className=" w-full bg-transparent border-red-500 shadow-none">
                     <CardHeader>
-                        <CardTitle>Welcome Back!</CardTitle>
+                        <CardTitle className="text-4xl">
+                            Welcome Back!
+                        </CardTitle>
 
-                        <CardDescription className="text-md">
+                        <CardDescription className="text-xl">
                             Enter your username and password to continue
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="grid gap-y-8">
+                    <CardContent className="grid">
                         <FormField
                             name="username"
                             disabled={isPending}
@@ -129,7 +131,11 @@ const SignInForm = () => {
                     </CardContent>
                     <CardFooter>
                         <div className="grid w-full gap-y-4">
-                            <Button disabled={isPending} type="submit">
+                            <Button
+                                disabled={isPending}
+                                type="submit"
+                                className="text-xl font-bold"
+                            >
                                 {isPending ? (
                                     <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

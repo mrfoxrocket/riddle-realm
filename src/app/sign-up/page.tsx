@@ -54,7 +54,7 @@ const Page = () => {
 
     return (
         <div className="flex flex-col justify-between py-20 flex-1 ">
-            <div className="flex flex-col lg:flex-row text-center lg:text-start gap-y-10 lg:gap-x-36 items-center lg:items-start">
+            <div className="flex flex-col lg:flex-row text-center lg:text-start gap-y-14 lg:gap-x-36 items-center lg:items-start">
                 <div className="flex flex-1 flex-col gap-10 text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400 justify-between py-6 lg:self-start  ">
                     <h2 className="font-bold text-5xl max-w-[900px] text-green-500">
                         {heading}

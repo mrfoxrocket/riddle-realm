@@ -99,14 +99,16 @@ const SignUpForm = (props: SignUpFormProps) => {
             >
                 <Card className="w-full  sm:w-96 bg-transparent border-none shadow-none">
                     <CardHeader>
-                        <CardTitle>Create your account</CardTitle>
+                        <CardTitle className="text-4xl">
+                            Create your account
+                        </CardTitle>
 
-                        <CardDescription className="text-md">
+                        <CardDescription className="text-xl">
                             Make sure to add the answer to the riddle in your
                             username otherwise... You Shall Not Pass!
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="grid gap-y-8">
+                    <CardContent className="grid ">
                         <FormField
                             name="username"
                             disabled={isPending}
@@ -198,7 +200,11 @@ const SignUpForm = (props: SignUpFormProps) => {
                     </CardContent>
                     <CardFooter>
                         <div className="grid w-full gap-y-4">
-                            <Button disabled={isPending} type="submit">
+                            <Button
+                                disabled={isPending}
+                                type="submit"
+                                className="text-xl font-bold"
+                            >
                                 {isPending ? (
                                     <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
