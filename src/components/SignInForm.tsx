@@ -77,7 +77,7 @@ const SignInForm = () => {
                 className="h-full items-center flex w-full md:max-w-[600px]"
                 onSubmit={form.handleSubmit(onSubmit)}
             >
-                <Card className=" w-full bg-transparent border-red-500 shadow-none">
+                <Card className=" w-full bg-transparent border-none shadow-none">
                     <CardHeader>
                         <CardTitle className="text-4xl">
                             Welcome Back!
