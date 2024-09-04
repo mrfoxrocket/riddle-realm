@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
 import { getHints, getRandomRiddle, getAnswer } from "@/actions/riddles";
 import RiddleForm from "@/components/RiddleForm";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
