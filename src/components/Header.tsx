@@ -31,8 +31,10 @@ export default function Header() {
             <div className="flex flex-col gap-y-2">
                 <Link href={"/"}>
                     <div className="flex items-center gap-2 justify-center hover:scale-110 transition-all ease-in-out">
-                        <h1 className="text-6xl font-bold text-primary">¿</h1>
-                        <h1 className="text-5xl font-bold">RiddleRealm.</h1>
+                        <h1 className="flex">
+                            <p className="text-6xl font-bold text-primary">¿</p>
+                            <p className="text-5xl font-bold">RiddleRealm.</p>
+                        </h1>
                     </div>
                 </Link>
                 {!signedOut && (

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
         title: "RiddleRealm - Your Puzzle Performance Stats",
         description:
             "Explore your riddle-solving statistics, track your progress, and see how you stack up against others in RiddleRealm.",
-        url: "https://riddle-realm-two.vercel.app/stats",
+        url: "https://riddlerealm.app/stats",
         siteName: "RiddleRealm",
     },
     twitter: {

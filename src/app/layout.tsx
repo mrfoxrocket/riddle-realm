@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         title: "RiddleRealm - Enter a World of Riddles",
         description:
             "Explore new riddles, track your stats, and engage with a community of riddle enthusiasts in RiddleRealm.",
-        url: "https://riddle-realm-two.vercel.app/",
+        url: "https://riddlerealm.app/",
         siteName: "RiddleRealm",
     },
     twitter: {

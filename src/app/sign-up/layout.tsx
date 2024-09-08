@@ -8,7 +8,7 @@ export const metadata: Metadata = {
         title: "Sign Up - RiddleRealm",
         description:
             "Solve a riddle, embed the answer in your username, and join the RiddleRealm community.",
-        url: "https://riddle-realm-two.vercel.app/sign-up",
+        url: "https://riddlerealm.app/sign-up",
         siteName: "RiddleRealm",
     },
     twitter: {

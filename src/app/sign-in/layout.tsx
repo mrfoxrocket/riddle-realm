@@ -8,7 +8,7 @@ export const metadata: Metadata = {
         title: "Sign In - RiddleRealm",
         description:
             "Sign in to your account on RiddleRealm and pick up where you left off.",
-        url: "https://riddle-realm-two.vercel.app/sign-in",
+        url: "https://riddlerealm.app/sign-in",
         siteName: "RiddleRealm",
     },
     twitter: {
