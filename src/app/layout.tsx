@@ -10,6 +10,8 @@ export const metadata: Metadata = {
     title: "RiddleRealm | Enter a World of Riddles",
     description:
         "Dive into a world of riddles tailored just for you. Solve challenges, track your progress, and compare your achievements with others in RiddleRealm.",
+    keywords:
+        "RiddleRealm, riddles, puzzles, brain teasers, challenge, riddle-solving, fun riddles, riddles game, online riddles",
     openGraph: {
         title: "RiddleRealm - Enter a World of Riddles",
         description:
@@ -38,7 +40,7 @@ export default function RootLayout({
                 {" "}
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="system"
+                    defaultTheme="dark"
                     enableSystem
                     disableTransitionOnChange
                 >

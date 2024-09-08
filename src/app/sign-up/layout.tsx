@@ -4,6 +4,9 @@ export const metadata: Metadata = {
     title: "Sign Up | RiddleRealm",
     description:
         "Create your account by solving a riddle and embedding the answer in your username. Join the challenge in RiddleRealm!",
+    keywords:
+        "RiddleRealm, riddles, sign up, create account, riddle community, riddle-solving, join RiddleRealm, solve riddles",
+
     openGraph: {
         title: "Sign Up - RiddleRealm",
         description:

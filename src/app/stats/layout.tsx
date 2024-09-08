@@ -4,6 +4,9 @@ export const metadata: Metadata = {
     title: "RiddleRealm Stats | Your Puzzle Performance",
     description:
         "View detailed statistics about your riddle-solving performance. Track your progress, achievements, and compare your stats with others in RiddleRealm.",
+    keywords:
+        "riddle stats, track progress, RiddleRealm stats, achievements, riddle-solving record, leaderboard",
+
     openGraph: {
         title: "RiddleRealm - Your Puzzle Performance Stats",
         description:
