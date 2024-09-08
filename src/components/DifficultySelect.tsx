@@ -8,7 +8,7 @@ const DifficultySelect = (props: DifficultySelectProps) => {
 
     return (
         <div className="self-center flex flex-col items-center gap-6">
-            <h2 className="text-4xl font-bold">Select Your Difficulty</h2>
+            <h3 className="text-4xl font-bold">Select Your Difficulty</h3>
             <TabsRadioGroup
                 className="flex gap-2 "
                 defaultValue="all"

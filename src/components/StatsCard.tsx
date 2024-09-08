@@ -19,9 +19,9 @@ const StatsCard = (props: Props) => {
                 className
             )}
         >
-            <h2 className="text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
+            <h4 className="text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
                 {title}
-            </h2>
+            </h4>
             <p className="mt-4 text-left  text-5xl text-neutral-200">{stat}</p>
         </WobbleCard>
     );

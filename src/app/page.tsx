@@ -110,11 +110,11 @@ function Home() {
                 }}
             />
             <div className="flex flex-col gap-6 w-full flex-1 items-center sm:pl-10  ">
-                <h1
+                <h2
                     className={` ${modak.className} heading text-[10vw]  font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-primary to-green5 bg-opacity-50`}
                 >
                     SOLVE A RIDDLE
-                </h1>
+                </h2>
 
                 <DifficultySelect
                     difficulty={difficulty}

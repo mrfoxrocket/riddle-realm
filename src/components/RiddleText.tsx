@@ -8,7 +8,7 @@ const RiddleText = ({
     difficulty: string;
 }) => {
     return (
-        <h2 className="text-3xl flex w-full p-4 justify-center text-center ">
+        <h4 className="text-3xl flex w-full p-4 justify-center text-center ">
             {!riddle?.allSolved && (
                 <TextGenerateEffect
                     key={riddle.question}
@@ -36,7 +36,7 @@ const RiddleText = ({
                     words="Congratulations! You've Solved All The Riddles We Have!"
                 />
             )}
-        </h2>
+        </h4>
     );
 };
 
