@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
 
     const path = new URL(request.url).pathname;
 
-    const unprotectedPaths = ["/sign-in", "/sign-up, /sitemap.xml"];
+    const unprotectedPaths = ["/sign-in", "/sign-up"];
 
     const user = await getUser(request, response);
     const isUnprotectedPath = unprotectedPaths.some((up) =>
@@ -30,7 +30,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+    matcher: [
+        "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    ],
 };
 
 async function getUser(request: NextRequest, response: NextResponse) {
