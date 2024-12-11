@@ -44,36 +44,23 @@ const LeaderboardTable = async () => {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="w-[100px] text-white">
-                                    Ranking
-                                </TableHead>
-                                <TableHead className="text-white">
-                                    Username
-                                </TableHead>
+                                <TableHead className="w-[100px] text-white">Ranking</TableHead>
+                                <TableHead className="text-white">Username</TableHead>
                                 <TableHead className="text-right text-white">
                                     Riddles Solved
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {leaderboardStats?.map((user, index) => (
+                            {leaderboardStats?.map((user: any, index: number) => (
                                 <TableRow key={index}>
                                     <TableCell className="font-medium">
                                         {index + 1 === 1 ? (
-                                            <TbHexagonNumber1Filled
-                                                size={32}
-                                                color="#F59E0B"
-                                            />
+                                            <TbHexagonNumber1Filled size={32} color="#F59E0B" />
                                         ) : index + 1 === 2 ? (
-                                            <TbHexagonNumber2Filled
-                                                size={32}
-                                                color="#B1B1B1"
-                                            />
+                                            <TbHexagonNumber2Filled size={32} color="#B1B1B1" />
                                         ) : index + 1 === 3 ? (
-                                            <TbHexagonNumber3Filled
-                                                size={32}
-                                                color="#CD7F32"
-                                            />
+                                            <TbHexagonNumber3Filled size={32} color="#CD7F32" />
                                         ) : (
                                             <p className="text-2xl font-semibold text-center  w-[32px]">
                                                 {index + 1}

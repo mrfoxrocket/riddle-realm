@@ -1,5 +1,5 @@
 import { WobbleCard } from "./ui/wobble-card";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 
 type Props = {
     title: string;

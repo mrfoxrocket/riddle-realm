@@ -26,7 +26,6 @@ const SolutionResult = ({
 
     useEffect(() => {
         setOpen(riddleResult || answer !== "");
-        console.log("riddleResult", riddleResult);
     }, [riddleResult, answer]);
 
     const handleClick = async () => {
@@ -48,7 +47,7 @@ const SolutionResult = ({
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogAction
-                        className="text-xl md:text-3xl p-6 md:p-8 dark:text-white"
+                        className="text-xl md:text-3xl p-6 md:p-8 text-white"
                         onClick={() => handleClick()}
                     >
                         {isPending ? (

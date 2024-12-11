@@ -1,114 +1,119 @@
 "use server";
 
 import db from "@/db";
-import { profile, userRiddle } from "@/db/schemas";
-import { getSupabaseAuth, getUser } from "@/lib/auth";
+import { user, userRiddle } from "@/db/schemas";
+import bcrypt from "bcrypt";
 import { checkRiddleAnswer } from "./riddles";
+import {
+  createSession,
+  generateSessionToken,
+  getCurrentSession,
+  invalidateSession,
+} from "@/auth/sessionActions";
+import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
+import { schema } from "@/auth/formSchema";
 
 export const signUpAction = async (
-    data: {
-        username: string;
-        password: string;
-        confirmPassword: string;
-    },
-    riddleId: string,
-    hintsUsed: number
-): Promise<boolean | { errorMessage: string }> => {
-    const { username, password } = data;
-    const email = username + "@email.com";
+  data: {
+    username: string;
+    password: string;
+    confirmPassword: string;
+  },
+  riddleId: string,
+  hintsUsed: number,
+) => {
+  const { username, password } = data;
 
-    try {
-        if (!riddleId) throw new Error("Please generate a riddle first");
+  if (!riddleId)
+    return {
+      errorMessage: "Please generate a riddle first",
+    };
 
-        const answerCorrect = await checkRiddleAnswer(
-            username,
-            riddleId,
-            hintsUsed,
-            false,
-            true
-        );
-        if (!answerCorrect) throw new Error("Username must include answer");
+  const result = await schema.safeParseAsync(data);
 
-        const { error } = await getSupabaseAuth().signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    username,
-                },
-            },
-        });
-        if (error) throw error;
+  if (result.success) {
+    const answerCorrect = await checkRiddleAnswer(
+      username,
+      riddleId,
+      hintsUsed,
+      false,
+      true,
+    );
 
-        const { data, error: loginError } =
-            await getSupabaseAuth().signInWithPassword({
-                email,
-                password,
-            });
+    if (!answerCorrect)
+      return {
+        errorMessage: "Username must include answer",
+      };
 
-        const user = await getUser();
+    const hashedPass = bcrypt.hashSync(password, 10);
 
-        await db.insert(profile).values({
-            id: user.id,
-            username,
-        });
+    await db.insert(user).values({
+      username,
+      password: hashedPass,
+    });
 
-        await db.insert(userRiddle).values({
-            userId: user.id,
-            riddleId,
-            solved: true,
-            answerShown: false,
-            hintsUsed,
-        });
+    const users = await db
+      .select()
+      .from(user)
+      .where(eq(user.username, username))
+      .limit(1);
 
-        if (loginError) throw loginError;
-        if (!data.session) throw new Error("No session found");
+    await db.insert(userRiddle).values({
+      userId: users[0].id,
+      riddleId,
+      solved: true,
+      answerShown: false,
+      hintsUsed,
+    });
 
-        return true;
-    } catch (error) {
-        console.error(error);
-        return {
-            errorMessage:
-                error instanceof Error ? error.message : String(error),
-        };
-    }
+    const token = await generateSessionToken();
+    await createSession(token, users[0].id);
+
+    return true;
+  }
 };
 
 export const signInAction = async (signInData: {
-    username: string;
-    password: string;
-}): Promise<boolean | { errorMessage: string }> => {
+  username: string;
+  password: string;
+}) => {
+  const { username, password } = signInData;
+  const result = await schema.safeParseAsync(signInData);
+
+  if (result.success) {
+    const data = await db
+      .select()
+      .from(user)
+      .where(eq(user.username, username))
+      .limit(1);
+
     try {
-        const { username, password } = signInData;
-        const email = username + "@email.com";
+      if (data.length === 0) {
+        throw new Error();
+      }
+      const encrypted = data[0].password;
+      const checkPass = bcrypt.compareSync(password, encrypted);
 
-        const { data, error: loginError } =
-            await getSupabaseAuth().signInWithPassword({
-                email,
-                password,
-            });
-
-        if (loginError) throw loginError;
-        if (!data.session) throw new Error("No session found");
-
-        return true;
-    } catch (error) {
-        console.error(error);
-        return {
-            errorMessage:
-                error instanceof Error ? error.message : String(error),
-        };
+      if (!checkPass) {
+        throw new Error();
+      }
+    } catch {
+      return {
+        errorMessage: "Email or password are incorrect",
+      };
     }
+
+    const token = await generateSessionToken();
+    await createSession(token, data[0].id);
+
+    return true;
+  }
 };
 
 export const signOutAction = async () => {
-    try {
-        const { error } = await getSupabaseAuth().signOut();
-
-        if (error) throw error;
-
-        return { errorMessage: null };
-    } catch (error) {
-        console.error(error);
-    }
+  const { session } = await getCurrentSession();
+  if (session) {
+    await invalidateSession(session?.id);
+  }
 };

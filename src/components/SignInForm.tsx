@@ -42,7 +42,7 @@ const SignInForm = () => {
             .max(20, "Username must be less than 20 characters")
             .regex(
                 /^(?!.*([_.])\1)[a-zA-Z0-9._]+$/,
-                "Username must only contain letters, numbers, and non-consecutive underscores or dots"
+                "Username must only contain letters, numbers, and non-consecutive underscores or dots",
             ),
         password: z.string().min(8, "Password must be at least 8 characters"),
     });
@@ -79,9 +79,7 @@ const SignInForm = () => {
             >
                 <Card className=" w-full bg-transparent border-none shadow-none">
                     <CardHeader>
-                        <CardTitle className="text-4xl">
-                            Welcome Back!
-                        </CardTitle>
+                        <CardTitle className="text-4xl">Welcome Back!</CardTitle>
 
                         <CardDescription className="text-xl">
                             Enter your username and password to continue
@@ -94,14 +92,9 @@ const SignInForm = () => {
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className="hidden">
-                                        Username
-                                    </FormLabel>
+                                    <FormLabel className="hidden">Username</FormLabel>
                                     <FormControl>
-                                        <Input
-                                            placeholder="Username"
-                                            {...field}
-                                        />
+                                        <Input placeholder="Username" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -114,15 +107,9 @@ const SignInForm = () => {
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className="hidden">
-                                        Password
-                                    </FormLabel>
+                                    <FormLabel className="hidden">Password</FormLabel>
                                     <FormControl>
-                                        <Input
-                                            type="password"
-                                            placeholder="Password"
-                                            {...field}
-                                        />
+                                        <Input type="password" placeholder="Password" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

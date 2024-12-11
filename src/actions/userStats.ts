@@ -4,18 +4,21 @@ import db from "@/db";
 import { riddle, userRiddle, RiddleDifficulty } from "@/db/schemas";
 
 import { getUser } from "@/lib/auth";
+import { Riddle } from "@/lib/types";
 import { and, eq, sql, gt, sum, count } from "drizzle-orm";
 
 export const getTotalSolved = async () => {
     try {
+        const user = await getUser();
+
+        if (!user) {
+            throw new Error("User not found");
+        }
         const result = await db.execute(
-            sql`SELECT COUNT(*) FROM ${userRiddle} WHERE solved = true AND user_id = ${
-                (
-                    await getUser()
-                ).id
-            }`
+            sql`SELECT COUNT(*) FROM ${userRiddle} WHERE solved = true AND user_id = ${user.id
+                }`,
         );
-        return result[0];
+        return result.rows[0].count;
     } catch (error) {
         console.error("Error fetching total solved riddles:", error);
         throw error;
@@ -24,14 +27,16 @@ export const getTotalSolved = async () => {
 
 export const getTotalAnswersShown = async () => {
     try {
+        const user = await getUser();
+
+        if (!user) {
+            throw new Error("User not found");
+        }
         const result = await db.execute(
-            sql`SELECT COUNT(*) FROM ${userRiddle} WHERE answer_shown = true AND user_id = ${
-                (
-                    await getUser()
-                ).id
-            }`
+            sql`SELECT COUNT(*) FROM ${userRiddle} WHERE answer_shown = true AND user_id = ${user.id
+                }`,
         );
-        return result[0];
+        return result.rows[0].count;
     } catch (error) {
         console.error("Error fetching total shown answers:", error);
         throw error;
@@ -40,11 +45,18 @@ export const getTotalAnswersShown = async () => {
 
 export const getHintsUsed = async () => {
     try {
+        const user = await getUser();
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
         const result = await db
             .select({ count: sum(userRiddle.hintsUsed) })
             .from(userRiddle)
-            .where(eq(userRiddle.userId, (await getUser()).id));
+            .where(eq(userRiddle.userId, user.id));
 
+        console.log(result);
         return result[0];
     } catch (error) {
         console.error("Error fetching hints used:", error);
@@ -54,21 +66,25 @@ export const getHintsUsed = async () => {
 
 export const getDifficultyStats = async () => {
     try {
+        const user = await getUser();
+
+        if (!user) {
+            throw new Error("User not found");
+        }
         const result = await db.execute(
             sql`
-                SELECT riddle.difficulty, COUNT(*) AS count
+                SELECT ${riddle.difficulty}, COUNT(*) AS count
                 FROM ${userRiddle}
-                INNER JOIN ${riddle} ON ${userRiddle}.riddle_id = ${riddle}.id
-                WHERE ${userRiddle}.user_id = ${(await getUser()).id}
-                GROUP BY riddle.difficulty
-            `
+                INNER JOIN ${riddle} ON ${userRiddle.riddleId} = ${riddle.id}
+                WHERE ${userRiddle.userId} = ${user.id}
+                GROUP BY ${riddle.difficulty}
+            `,
         );
 
-        // ensure that all difficulties are accounted for even if count is 0
         const difficulties = RiddleDifficulty.enumValues;
         const difficultyStats = difficulties.map((difficulty) => {
-            const matchingResult = result.find(
-                (riddle) => riddle.difficulty === difficulty
+            const matchingResult = result.rows.find(
+                (riddle: Riddle) => riddle.difficulty === difficulty,
             );
             return {
                 difficulty,
@@ -78,7 +94,6 @@ export const getDifficultyStats = async () => {
             };
         });
 
-        console.log(difficultyStats);
         return difficultyStats;
     } catch (error) {
         console.error("Error fetching difficulty stats:", error);
@@ -87,45 +102,46 @@ export const getDifficultyStats = async () => {
 };
 
 export const getMethodSolvedStats = async () => {
-    const answerShown = await db
-        .select({ count: count(userRiddle) })
-        .from(userRiddle)
-        .where(
-            and(
-                eq(userRiddle.userId, (await getUser()).id),
-                eq(userRiddle.answerShown, true)
-            )
-        );
+    try {
+        const user = await getUser();
 
-    const hintUsed = await db
-        .select({ count: count(userRiddle) })
-        .from(userRiddle)
-        .where(
-            and(
-                eq(userRiddle.userId, (await getUser()).id),
-                gt(userRiddle.hintsUsed, 0),
-                eq(userRiddle.answerShown, false)
-            )
-        );
+        if (!user) {
+            throw new Error("User not found");
+        }
 
-    const hintNotUsed = await db
-        .select({ count: count(userRiddle) })
-        .from(userRiddle)
-        .where(
-            and(
-                eq(userRiddle.userId, (await getUser()).id),
-                eq(userRiddle.hintsUsed, 0)
-            )
-        );
+        const answerShown = await db
+            .select({ count: count(userRiddle) })
+            .from(userRiddle)
+            .where(
+                and(eq(userRiddle.userId, user.id), eq(userRiddle.answerShown, true)),
+            );
 
-    return [
-        {
-            name: "answerShown",
-            count: answerShown[0].count,
-        },
-        { name: "hintUsed", count: hintUsed[0].count },
-        { name: "noHelp", count: hintNotUsed[0].count },
-    ];
+        const hintUsed = await db
+            .select({ count: count(userRiddle) })
+            .from(userRiddle)
+            .where(
+                and(
+                    eq(userRiddle.userId, user.id),
+                    gt(userRiddle.hintsUsed, 0),
+                    eq(userRiddle.answerShown, false),
+                ),
+            );
+
+        const hintNotUsed = await db
+            .select({ count: count(userRiddle) })
+            .from(userRiddle)
+            .where(and(eq(userRiddle.userId, user.id), eq(userRiddle.hintsUsed, 0)));
+
+        return [
+            {
+                name: "answerShown",
+                count: answerShown[0].count,
+            },
+            { name: "hintUsed", count: hintUsed[0].count },
+            { name: "noHelp", count: hintNotUsed[0].count },
+        ];
+    } catch (error) {
+        console.error("Error fetching method solved stats:", error);
+        throw error;
+    }
 };
-
-// userId, username, riddlesSolved (without answer),

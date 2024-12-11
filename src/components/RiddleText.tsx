@@ -12,7 +12,7 @@ const RiddleText = ({
             {!riddle?.allSolved && (
                 <TextGenerateEffect
                     key={riddle.question}
-                    className="max-w-[600px] font-normal text-neutral-600 dark:text-neutral-400 text-3xl text-center "
+                    className="max-w-[600px] font-normal text-neutral-400 text-3xl text-center "
                     duration={1}
                     filter={false}
                     words={riddle.question ?? ""}

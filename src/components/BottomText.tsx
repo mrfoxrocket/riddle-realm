@@ -2,7 +2,7 @@
 
 import { Button } from "./ui/button";
 import { BottomTextProps } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 
 const BottomText = ({
     className,

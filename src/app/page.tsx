@@ -100,13 +100,7 @@ function Home() {
                     stagger: 3,
                     width: "15px",
                     height: "24px",
-                    colors: [
-                        "#88D969",
-                        "#46CB18",
-                        "#06A10B",
-                        "#1D800E",
-                        "#2BAB27",
-                    ],
+                    colors: ["#88D969", "#46CB18", "#06A10B", "#1D800E", "#2BAB27"],
                 }}
             />
             <div className="flex flex-col gap-6 w-full flex-1 items-center sm:pl-10  ">

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Dosis } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/providers/theme-provider";
 import Header from "@/components/Header";
 
 const dosis = Dosis({ subsets: ["latin"] });
@@ -37,22 +36,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={dosis.className}>
-                {" "}
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="dark"
-                    enableSystem
-                    disableTransitionOnChange
+                <main
+                    className="flex min-h-screen w-full h-full flex-col items-center justify-start gap-10 p-8 
+                    bg-gradient-to-t from-primary/80 via-[#283328] via-99% to-[#16151a]"
                 >
-                    <main
-                        className="flex min-h-screen w-full h-full flex-col items-center justify-start gap-10 p-8 
-                    bg-gradient-to-t from-primary/80 via-[#E4FFE4] via-99% to-[#F5FAF5]
-                    dark:bg-gradient-to-t dark:from-primary/80 dark:via-[#283328] via-99% dark:to-[#16151a]"
-                    >
-                        <Header />
-                        {children}
-                    </main>
-                </ThemeProvider>
+                    <Header />
+                    {children}
+                </main>
             </body>
         </html>
     );

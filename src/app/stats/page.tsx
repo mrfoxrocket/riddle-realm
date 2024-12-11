@@ -14,29 +14,23 @@ import LeaderboardTable from "@/components/LeaderboardTable";
 const Stats = async () => {
     const user = await getUser();
 
-    const totalSolved = (await getTotalSolved()) as { count: number };
-
-    const totalAnswersShown = (await getTotalAnswersShown()) as {
-        count: number;
-    };
+    const totalSolved = await getTotalSolved();
+    const totalAnswersShown = await getTotalAnswersShown();
 
     const hintsUsed = (await getHintsUsed()) as { count: string };
-    console.log(hintsUsed);
 
     return (
         <div className="flex w-full flex-col gap-4">
             <h2 className="text-4xl font-bold">Stats</h2>
-            <h3 className="text-3xl font-semibold">
-                Hello, {user?.user_metadata.username}
-            </h3>
+            <h3 className="text-3xl font-semibold">Hello, {user?.username}</h3>
             <div className="flex flex-col md:flex-row gap-4 ">
                 <StatsCard
-                    stat={totalSolved.count}
+                    stat={totalSolved}
                     title="Riddles Solved"
                     containerClassName="bg-primary"
                 />
                 <StatsCard
-                    stat={totalAnswersShown.count}
+                    stat={totalAnswersShown}
                     title="Answers Shown"
                     containerClassName="bg-green2"
                 />

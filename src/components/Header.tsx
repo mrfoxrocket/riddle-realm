@@ -3,7 +3,6 @@
 import { signOutAction } from "@/actions/user";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
-import { ThemeToggle } from "./ThemeToggle";
 import Link from "next/link";
 
 export default function Header() {
@@ -40,10 +39,7 @@ export default function Header() {
                 {!signedOut && (
                     <div className="hidden sm:flex w-full justify-center items-center">
                         <Link href="/stats">
-                            <Button
-                                className="text-2xl font-bold"
-                                variant="link"
-                            >
+                            <Button className="text-2xl font-bold" variant="link">
                                 Stats
                             </Button>
                         </Link>
@@ -51,7 +47,7 @@ export default function Header() {
                 )}
             </div>
 
-            <ThemeToggle className="hidden sm:inline-flex" />
+            <div></div>
 
             {!signedOut ? (
                 <div className="sm:hidden grid grid-cols-3 gap-4 items-center justify-items-center">
@@ -65,18 +61,15 @@ export default function Header() {
                             Sign Out
                         </Button>
                         <Link href="/stats">
-                            <Button
-                                className="text-2xl font-bold"
-                                variant="link"
-                            >
+                            <Button className="text-2xl font-bold" variant="link">
                                 Stats
                             </Button>
                         </Link>
                     </>
-                    <ThemeToggle />
+                    <div></div>
                 </div>
             ) : (
-                <ThemeToggle className="sm:hidden" />
+                <div></div>
             )}
         </header>
     );

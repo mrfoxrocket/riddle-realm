@@ -13,9 +13,9 @@ const CenterInput = (props: CenterInputProps) => {
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder="Answer Here..."
-                    className={`w-full bg-transparent placeholder-black/50 dark:placeholder-muted-foreground text-center text-2xl pb-2 font-medium outline-none z-10 relative ${
+                    className={`w-full bg-transparent placeholder-muted-foreground text-center text-2xl pb-2 font-medium outline-none z-10 relative ${
                         inputValue === ""
-                            ? "border-b-4 border-black/50 dark:border-muted-foreground"
+                            ? "border-b-4 border-muted-foreground"
                             : "border-none"
                     }`}
                 />

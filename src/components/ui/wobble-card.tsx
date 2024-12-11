@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 
 export const WobbleCard = ({
     children,
@@ -24,6 +24,7 @@ export const WobbleCard = ({
     };
     return (
         <motion.section
+            // @ts-ignore
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => {
@@ -38,7 +39,7 @@ export const WobbleCard = ({
             }}
             className={cn(
                 "mx-auto w-full bg-indigo-800  relative rounded-2xl overflow-hidden",
-                containerClassName
+                containerClassName,
             )}
         >
             <div
@@ -55,6 +56,7 @@ export const WobbleCard = ({
                             : "translate3d(0px, 0px, 0) scale3d(1, 1, 1)",
                         transition: "transform 0.1s ease-out",
                     }}
+                    // @ts-ignore
                     className={cn("h-full px-4 py-10 sm:px-10", className)}
                 >
                     <Noise />

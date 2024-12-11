@@ -31,11 +31,9 @@ const RiddleForm = (props: RiddleFormProps) => {
                 inputValue,
                 riddleId,
                 hintsUsed,
-                answerShown
+                answerShown,
             );
 
-            console.log(result);
-            console.log(inputValue);
             setRiddleResult(result);
 
             setWrongAnswerMessage(!result);
